@@ -5,4 +5,19 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <button id="btn1" class="btn btn-sm btn-primary"> 버튼1</button>
+
+    <form method="post" action="/home/Test">
+        x: <input type ="text" name="x" value="" class="form-control" />
+        y :<input type ="text" name="y" value="" class="form-control" />
+
+        <button type = "submit" class = "btn btn-primary">전송</button>
+    </form>
 </div>
+
+<script>
+$("#btn1").click(function () {
+    alert("버튼1이 눌렸습니다.");
+});
+</script>

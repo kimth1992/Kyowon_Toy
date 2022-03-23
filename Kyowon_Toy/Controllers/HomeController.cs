@@ -28,15 +28,30 @@ namespace Kyowon_Toy.Controllers
             return View();
         }
 
-        public IActionResult Test()
+        [HttpPost]
+        public IActionResult Test(string x, string y)
         {
-            return View();
+            ViewData["x"] = x;
+            ViewBag.y = y;
+
+            List<TestModel> list = new List<TestModel>();
+            list.Add(new TestModel() { x = 1, y = "a" });
+            list.Add(new TestModel() { x = 2, y = "b" });
+            list.Add(new TestModel() { x = 3, y = "c" });
+            list.Add(new TestModel() { x = 4, y = "d" });
+
+            ViewData["list"] = list;
+
+            return View(list);
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+       
     }
 }

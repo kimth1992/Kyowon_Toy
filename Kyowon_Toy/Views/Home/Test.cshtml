@@ -1,9 +1,38 @@
-﻿@{
-    ViewData["Title"] = "Test";
+﻿@model List<TestModel>
+@{
+    var x = ViewBag.x;
+   
 }
-<h1>@ViewData["Title"]</h1>
+
 
 <p>이곳은 테스트 페이지 입니다.</p>
 
 
 <div> 깃허브 푸시 테스트 </div>
+
+
+<table class = "table border">
+    <thead>
+        <tr>
+            <th>X</th>
+            <th>Y</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+
+    <tr>
+        <td>@item.x </td>
+        <td>@item.y</td> 
+
+    </tr>
+            
+        }
+        
+
+
+    </tbody>
+
+</table>
+
