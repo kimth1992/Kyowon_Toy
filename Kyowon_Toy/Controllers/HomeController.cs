@@ -1,8 +1,10 @@
 ﻿using Kyowon_Toy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,12 +27,86 @@ namespace Kyowon_Toy.Controllers
 
         public IActionResult Privacy()
         {
-            return View();
+            var dt = new DataTable();
+            string sex = "남";
+
+            return View(MemberModel.GetList(sex));
+
+   
+
+
+            /*              using (var cmd = new MySqlCommand())
+                          {
+                              string sex = "남";
+                              cmd.Connection = conn;
+
+                              *//*  cmd.CommandText = @"select m.no
+          , m.name
+          ,m.sex
+          FROM
+          member m
+          where
+          m.sex = @sex";*//*
+
+                              cmd.Parameters.AddWithValue("@sex", sex);
+
+                              var reader = cmd.ExecuteReader();
+
+                              dt.Load(reader);
+
+                              cmd.ExecuteReader();
+                              // cmd.ExecuteNonQuery();
+                          }*/
+
+
+
+            /*  var list = new List<MemberModel>();
+
+              foreach(DataRow row in dt.Rows)
+              {
+                  var member = new MemberModel();
+                  member.No = Convert.ToInt32(row["no"]);
+                  member.Name = row["name"] as string;
+                  member.Sex = row["sex"] as string;
+
+                  list.Add(member);
+              }*/
+
+            // list.Add(new MemberModel() { });
+
+
+
+
+
+            //ViewData["dt"] = dt;
+            /* ViewData["list"] = list;*/
+
+            /*
+                        return View();*/
         }
 
-        [HttpPost]
+
+      //  public IActionResult PrivacyInsert(string name, string sex)
+        public IActionResult PrivacyInsert([FromForm]MemberModel model)
+        {
+
+          /*  var model = new MemberModel();
+            model.Name = name;
+            model.Sex = sex;
+          */
+            model.Insert();
+            return Redirect("/home/Privacy");
+            //return Json(new { msg = "ok" });
+           
+        }
+
+
+
+
         public IActionResult Test(string x, string y)
         {
+
+     
             ViewData["x"] = x;
             ViewBag.y = y;
 
