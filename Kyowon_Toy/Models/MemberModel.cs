@@ -1,4 +1,6 @@
-﻿using MySqlConnector;
+﻿using KyowonToy.lib;
+using KyowonToy.lib.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,11 +14,11 @@ namespace Kyowon_Toy.Models
 
         public static List<MemberModel> GetList(string sex)
         {
-            using (var conn = new MySqlConnection("Server = 127.0.0.1; Port = 3306; Database = kyowontoy; Uid = root; Pwd = root;"))
+       
+            using (var db = new MysqlDapperHelper())
             {
 
-                conn.Open();
-
+               
                 string sql = @"select m.no
 , m.name
 ,m.sex
@@ -25,7 +27,7 @@ member m
 where
 m.sex = @sex";
 
-                return Dapper.SqlMapper.Query<MemberModel>(conn, sql, new { sex = sex }).ToList();
+                return db.Query<MemberModel>(sql, new { sex = sex });
 
             }
         }
@@ -35,12 +37,9 @@ m.sex = @sex";
         public int Insert()
         {
             string sql = "insert into member(name, sex) values(@name, @sex)";
-            using (var conn = new MySqlConnection("Server = 127.0.0.1; Port = 3306; Database = kyowontoy; Uid = root; Pwd = root;"))
+            using (var db = new MysqlDapperHelper())
             {
-
-                conn.Open();
-
-                return Dapper.SqlMapper.Execute(conn, sql, this);
+                return db.Execute(sql, this);
             }
         }
 

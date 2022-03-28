@@ -6,13 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.23" />
-    <PackageReference Include="MySqlConnector" Version="2.1.8" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\img\login\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KyowonToy.lib\KyowonToy.lib.csproj" />
   </ItemGroup>
 
 </Project>
