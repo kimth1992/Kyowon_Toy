@@ -85,7 +85,7 @@ namespace WebApplication1.Controllers
             }
             throw new Exception("잘못된 요청입니다.");
         }
-
+        
 
         [Authorize]
         public IActionResult BoardEdit_Input(uint idx, string title, string contents)
@@ -109,6 +109,11 @@ namespace WebApplication1.Controllers
             model.Update();
 
             return Redirect("/home/boardlist");
+        }
+
+        public IActionResult Chat()
+        {
+            return View();
         }
 
 

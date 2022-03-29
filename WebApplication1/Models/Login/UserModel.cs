@@ -12,6 +12,7 @@ namespace WebApplication1.Models.Login
         public string password { get; set; }
 
 
+
         public void ConvertPassword()
         {
             var sha = new System.Security.Cryptography.HMACSHA512();
