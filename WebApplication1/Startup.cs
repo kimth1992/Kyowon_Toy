@@ -34,7 +34,7 @@ namespace WebApplication1
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie(options =>
             {
-                options.LoginPath = "/login";
+                options.LoginPath = "/login/login";
                 options.EventsType = typeof(CustomCookieAuthenticationEvents);
                 //  options.EventsType = 
             });

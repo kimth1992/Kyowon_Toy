@@ -9,16 +9,16 @@ namespace Kyowon_Toy.Models
     public class MemberModel
     {
         public int No { get; set; }
-        public string Name { get; set; }   
+        public string Name { get; set; }
         public string Sex { get; set; }
 
         public static List<MemberModel> GetList(string sex)
         {
-       
+
             using (var db = new MysqlDapperHelper())
             {
 
-               
+
                 string sql = @"select m.no
 , m.name
 ,m.sex
@@ -39,7 +39,24 @@ m.sex = @sex";
             string sql = "insert into member(name, sex) values(@name, @sex)";
             using (var db = new MysqlDapperHelper())
             {
-                return db.Execute(sql, this);
+                db.BeguinTransaction();
+                try
+                {
+                    int r = 0;
+                    r += db.Execute(sql, this);
+                    r += db.Execute(sql, this);
+                    r += db.Execute(sql, this);
+
+                    db.Commit();
+
+                    return r;
+
+                }
+                catch (Exception ex)
+                {
+                    db.RollBack();
+                    throw ex;
+                }
             }
         }
 

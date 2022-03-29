@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using KyowonToy.lib.DataBase;
+using MySqlConnector;
 using System;
 
 namespace WebApplication1.Models.Login
@@ -35,11 +36,11 @@ values(
 ,@email
 ,@password)";
 
-            using (var conn = new MySqlConnection("Server=127.0.0.1; port=3306; Database=kyowontoy;Uid=root;Pwd=root;"))
+            using (var db = new MysqlDapperHelper())
             {
-                conn.Open();
+               
 
-                return Dapper.SqlMapper.Execute(conn, sql, this);
+                return db.Execute(sql, this);
             }
         }
 
@@ -54,11 +55,11 @@ from user
 where user_name = @user_name";
 
             UserModel user;
-            using (var conn = new MySqlConnection("Server=127.0.0.1; port=3306; Database=kyowontoy;Uid=root;Pwd=root;"))
+            using (var db = new MysqlDapperHelper())
             {
-                conn.Open();
+             
 
-                user = Dapper.SqlMapper.QuerySingleOrDefault<UserModel>(conn, sql, this);
+                user = db.QuerySingle<UserModel>(sql, this);
             }
 
             if(user == null)
