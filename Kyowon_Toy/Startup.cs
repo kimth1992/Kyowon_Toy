@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,11 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Kyowon_Toy.Hubs;
+using Kyowon_Toy.Services;
 
 namespace Kyowon_Toy
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +28,21 @@ namespace Kyowon_Toy
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.LoginPath = "/login/login";
+                options.EventsType = typeof(CustomCookieAuthenticationEvents);
+                //  options.EventsType = 
+            });
+            services.AddSignalR();
+            services.AddScoped<CustomCookieAuthenticationEvents>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +63,7 @@ namespace Kyowon_Toy
 
             app.UseRouting();
 
+            app.UseAuthentication();    // 로그인 사용(인증 사용)
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -51,9 +71,10 @@ namespace Kyowon_Toy
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
-
-
     }
 }

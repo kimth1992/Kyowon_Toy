@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
 
-namespace WebApplication1.Hubs
+namespace Kyowon_Toy.Hubs
 {
     public class ChatHub : Hub
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace WebApplication1.Models
+namespace Kyowon_Toy.Models
 {
     public class BoardModel
     {

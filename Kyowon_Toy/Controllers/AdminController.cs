@@ -10,10 +10,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
-using WebApplication1.Models;
-using WebApplication1.Models.Login;
+using Kyowon_Toy.Models;
+using Kyowon_Toy.Models.Login;
 
-namespace WebApplication1.Controllers
+namespace Kyowon_Toy.Controllers
 {
     [Authorize]
     public class AdminController : Controller

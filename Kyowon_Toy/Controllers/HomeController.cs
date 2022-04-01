@@ -1,13 +1,13 @@
-﻿using Kyowon_Toy.Models;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MySqlConnector;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Kyowon_Toy.Models;
 
 namespace Kyowon_Toy.Controllers
 {
@@ -25,100 +25,95 @@ namespace Kyowon_Toy.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult TicketList()
         {
-            var dt = new DataTable();
-            string sex = "남";
 
-            return View(MemberModel.GetList(sex));
-
-   
-
-
-            /*              using (var cmd = new MySqlCommand())
-                          {
-                              string sex = "남";
-                              cmd.Connection = conn;
-
-                              *//*  cmd.CommandText = @"select m.no
-          , m.name
-          ,m.sex
-          FROM
-          member m
-          where
-          m.sex = @sex";*//*
-
-                              cmd.Parameters.AddWithValue("@sex", sex);
-
-                              var reader = cmd.ExecuteReader();
-
-                              dt.Load(reader);
-
-                              cmd.ExecuteReader();
-                              // cmd.ExecuteNonQuery();
-                          }*/
-
-
-
-            /*  var list = new List<MemberModel>();
-
-              foreach(DataRow row in dt.Rows)
-              {
-                  var member = new MemberModel();
-                  member.No = Convert.ToInt32(row["no"]);
-                  member.Name = row["name"] as string;
-                  member.Sex = row["sex"] as string;
-
-                  list.Add(member);
-              }*/
-
-            // list.Add(new MemberModel() { });
-
-
-
-
-
-            //ViewData["dt"] = dt;
-            /* ViewData["list"] = list;*/
-
-            /*
-                        return View();*/
+            return View();
         }
 
 
-      //  public IActionResult PrivacyInsert(string name, string sex)
-        public IActionResult PrivacyInsert([FromForm]MemberModel model)
+        public IActionResult BoardList(string search)
         {
+            return View(BoardModel.GetList(search));
+        }
+        [Authorize]
+        public IActionResult BoardWrite()
+        {
+            return View();
+        }
 
-          /*  var model = new MemberModel();
-            model.Name = name;
-            model.Sex = sex;
-          */
+        // 관리자만 사용 할 수 있다.
+        //[Authorize(Roles ="admin")]
+        [Authorize]
+        public IActionResult BoardWrite_Input(string title, string contents)
+        {
+            var model = new BoardModel();
+
+            model.Title = title;
+            model.Contents = contents;
+            model.User = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            model.UserName = User.Identity.Name;
             model.Insert();
-            return Redirect("/home/Privacy");
-            //return Json(new { msg = "ok" });
-           
+
+            return Redirect("/home/boardlist");
+        }
+        public IActionResult BoardView(uint idx)
+        {
+            return View(BoardModel.Get(idx));
+        }
+        [Authorize]
+        public IActionResult BoardEdit(uint idx, string type)
+        {
+            var model = BoardModel.Get(idx);
+
+            var userSeq = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (model.User != userSeq)
+            {
+                throw new Exception("수정 할 수 없습니다.");
+            }
+
+            if (type == "U")
+            {
+                return View(model);
+            }
+            else if (type == "D")
+            {
+                model.Delete();
+                return Redirect("/home/boardlist");
+
+            }
+            throw new Exception("잘못된 요청입니다.");
         }
 
 
-
-
-        public IActionResult Test(string x, string y)
+        [Authorize]
+        public IActionResult BoardEdit_Input(uint idx, string title, string contents)
         {
+            // idx가 안넘어옴
 
-     
-            ViewData["x"] = x;
-            ViewBag.y = y;
 
-            List<TestModel> list = new List<TestModel>();
-            list.Add(new TestModel() { x = 1, y = "a" });
-            list.Add(new TestModel() { x = 2, y = "b" });
-            list.Add(new TestModel() { x = 3, y = "c" });
-            list.Add(new TestModel() { x = 4, y = "d" });
+            var model = BoardModel.Get(idx);
 
-            ViewData["list"] = list;
+            var userSeq = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            return View(list);
+
+            if (model.User != userSeq)
+            {
+                throw new Exception("수정 할 수 없습니다.");
+            }
+
+            model.Title = title;
+            model.Contents = contents;
+
+            model.Update();
+
+            return Redirect("/home/boardlist");
+        }
+
+        public IActionResult Chat()
+        {
+            return View();
         }
 
 
@@ -127,7 +122,5 @@ namespace Kyowon_Toy.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-       
     }
 }
