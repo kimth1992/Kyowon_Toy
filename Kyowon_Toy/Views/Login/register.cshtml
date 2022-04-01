@@ -24,32 +24,35 @@ function nicknameCheck(){
         // 필수 입력정보인 아이디, 비밀번호가 입력되었는지 확인하는 함수
         function checkValue()
         {
-          
+         
+            /*
            if(!document.userInfo.grade.value){
                 alert("회원구분을 선택하세요.");
                 return false;
             }
+            */
           
             if(!document.userInfo.name.value){
                 alert("이름을 입력하세요.");
                 return false;
             } 
-            
+               /*
             if(!document.userInfo.nickname.value){
                 alert("별명을 입력하세요.");
                 return false;
             } 
-            
+            */
          /*  if(!document.userInfo.nicNameDuplication.value != "nicNameCheck"){
                 alert("별명 중복체크를 해주세요.");
                 return false;
             } 
          */
-            
+               /*
             if(!document.userInfo.id.value){
                 alert("아이디를 입력하세요.");
                 return false;
             }
+            */
             
       /*       if(!document.userInfo.idDuplication.value != "idCheck"){
                 alert("아이디 중복체크를 해주세요.");
@@ -67,10 +70,12 @@ function nicknameCheck(){
                 return false;
             }
           
+            /*
             if(!document.userInfo.email.value){
                 alert("이메일을 입력하세요.");
                 return false;
             }
+            */
             
             if(!document.userInfo.birthyy.value){
                 alert("생년월일을 입력하세요.");
@@ -88,10 +93,12 @@ function nicknameCheck(){
                 alert("연락처를 입력하세요.");
                 return false;
             }
+            /*
             if(!document.userInfo.sex.value){
                 alert("성별을 선택하세요.");
                 return false;
-            } 
+            }
+            */
         }
     </script>
     
@@ -125,9 +132,9 @@ function div_OnOff(v,id){
 </head>
 <body>
 <div class="container">
-<div class="" ></div>
+
 <h1 style="text-align : center">회원가입</h1>
-<form name = "userInfo" action='add' method='post'  enctype="multipart/form-data" onsubmit="return checkValue()" >
+<form name = "userInfo" action='/login/register' method='post'  enctype="multipart/form-data" onsubmit="return checkValue()" >
 
 <div class="col-md-12" style ="text-align : center">
   <h3 for="validationServer04" class="form-label" >-교원에 입사하신 것을 환영합니다-</h3>
@@ -136,9 +143,8 @@ function div_OnOff(v,id){
 
     <br />
 
-    <!-- 경력 구분
   <div class="mb-3 row">
-    <label for='f-grade' class="col-sm-3 col-form-label">* 구분</label>
+    <label for='f-grade' class="col-sm-3 col-form-label"> 구분</label>
     <div class="col-sm-6">
       <input id='member' type='radio' name='grade' value = "1" onclick="div_OnOff(this.value,'con');">
       <label>신입</label>
@@ -146,14 +152,13 @@ function div_OnOff(v,id){
       <label>경력</label>
     </div>
 </div>
--->
 
   <div class="mb-3 row">
     <label for='f-name' class="col-sm-3 col-form-label">* 이름</label>
     <div class="col-sm-6">
       <input id='f-name' type='text' name='name' class="form-control">
     </div>
-</div>
+</div> 
 
 
 <!--
@@ -236,11 +241,36 @@ function div_OnOff(v,id){
 
 
 <div class="mb-3 row">
-  <label for='f-tel' class="col-sm-3 col-form-label">* 휴대전화</label>
+  <label for='f-tel' class="col-sm-3 col-form-label"> * 연락처(Ajax 이걸로 쓰자)</label>
   <div class="col-sm-6">
     <input id='f-tel' type='tel' name='tel' placeholder ="010-0000-0000" class="form-control">
+    <div class="invalid-feedback">
+        이미 존재하는 연락처입니다.
+     </div>
   </div>
+   <div class ="col-auto">
+       <button id = "x-tel-check-btn" type ="button" class ="btn btn-primary form-control">중복검사</button>
+    </div>
 </div>
+
+<!--
+  <div class="mb-3 row">
+    <label for='f-nickname' class="col-sm-3 col-form-label">* 별명</label>
+    <div class="col-sm-6">
+      <input id='f-nickname' type='text' name='nickname' class ="form-control">
+     <div class="invalid-feedback">
+        이미 존재하는 별명입니다.
+     </div>
+   </div>
+     <div class ="col-auto">
+       <button id = "x-nickname-check-btn" type ="button" class ="btn btn-primary form-control">중복검사</button>
+    </div>
+    
+</div>
+ -->
+
+
+
 <div class="mb-3 row">
   <label for='f-photo' class="col-sm-3 col-form-label">사진</label>
   <div class="col-sm-6">
@@ -291,10 +321,11 @@ function div_OnOff(v,id){
 </div>
 
 </div>
+
   <div class="col-12">
     <button id ="x-add-btn" class ="btn btn-primary btn-sm">등록</button>
-    <!--  <input type = 'submit' value = '회원가입' class="btn btn-primary btn-sm" >-->
   </div>
+
 </form>
 </div><!-- .container -->
 <!-- <label for='f-name'>이름</label> <input id='f-name' type='text' name='name'><br>
@@ -307,28 +338,29 @@ function div_OnOff(v,id){
 
  <script>
  var addBtn = document.querySelector("#x-add-btn");
- var nicknameTag = document.querySelector("#f-nickname");
+ //var nicknameTag = document.querySelector("#f-nickname");
+ var telTag = document.querySelector("#f-tel");
  var idTag = document.querySelector("#f-id");
  
- addBtn.setAttribute("disabled", "disabled");
+ //addBtn.setAttribute("disabled", "disabled");
 
-document.querySelector ("#x-nickname-check-btn").onclick = () => {
+document.querySelector ("#x-tel-check-btn").onclick = () => {
 	 var xhr = new XMLHttpRequest();
 	 xhr.addEventListener("load", function() {
 		  if (this.responseText == "false"){
 			  addBtn.removeAttribute("disabled");
-			   nicknameTag.classList.remove("is-invalid");
+			   telTag.classList.remove("is-invalid");
 		  } else {
-			  addBtn.setAttribute("disabled", "disabled");
-			  nicknameTag.classList.add("is-invalid");
+			//  addBtn.setAttribute("disabled", "disabled");
+			  telTag.classList.add("is-invalid");
 		  }
 		  })
-		  xhr.open("get","checkNickname?nickname=" + nicknameTag.value);
+		  xhr.open("get","checkTel?tel=" + telTag.value);
 	    xhr.send();
 };
+FFRFH35U
 
-
-
+/*
 document.querySelector ("#x-id-check-btn").onclick = () =>{
 	   var xhr = new XMLHttpRequest();
 	   xhr.addEventListener("load", function() {
@@ -344,7 +376,7 @@ document.querySelector ("#x-id-check-btn").onclick = () =>{
 	      xhr.send();
 	};
 
-
+    */
 
  
  </script>
