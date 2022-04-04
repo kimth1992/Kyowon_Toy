@@ -243,7 +243,7 @@ function div_OnOff(v,id){
 <div class="mb-3 row">
   <label for='f-tel' class="col-sm-3 col-form-label"> * 연락처(Ajax 이걸로 쓰자)</label>
   <div class="col-sm-6">
-    <input id='f-tel' type='tel' name='tel' placeholder ="010-0000-0000" class="form-control">
+    <input id='f-tel' type='tel' name='mobile_tel' placeholder ="010-0000-0000" class="form-control">
     <div class="invalid-feedback">
         이미 존재하는 연락처입니다.
      </div>
@@ -290,28 +290,33 @@ function div_OnOff(v,id){
 </div>
 -->
 
+
 <div id="con" style = "display:none">
+
+    <!-- 
  <div class="mb-3 row" >
     <label for='f-major' class="col-sm-3 col-form-label">* 전문분야</label>
     <div class="col-sm-6">
      <input id='f-major' type='text' name='major' class="form-control">
     </div>
 </div>
-
+-->
 
  <div class="mb-3 row" >
-    <label for='f-license' class="col-sm-3 col-form-label">* 의사 자격증</label>
+    <label for='f-license' class="col-sm-3 col-form-label">경력 기술서</label>
     <div class="col-sm-6">
      <input id='f-license' type='file' name='license' class="form-control">
     </div>
 </div>
 
+<!--
  <div class="mb-3 row" >
     <label for='f-page' class="col-sm-3 col-form-label">홈페이지</label>
     <div class="col-sm-6">
      <input id='f-page' type='text' name='homepage' class="form-control">
     </div>
 </div>
+-->
 
  <div class="mb-3 row" >
     <label for='f-introduce' class="col-sm-3 col-form-label">인사말</label>
@@ -327,7 +332,9 @@ function div_OnOff(v,id){
   </div>
 
 </form>
-</div><!-- .container -->
+</div>
+
+<!-- .container -->
 <!-- <label for='f-name'>이름</label> <input id='f-name' type='text' name='name'><br>
 <label for='f-email'>이메일</label> <input id='f-email' type='email' name='email'><br>
 <label for='f-password'>암호</label> <input id='f-password' type='password' name='password'><br>

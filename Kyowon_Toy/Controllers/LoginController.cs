@@ -32,23 +32,28 @@ namespace Kyowon_Toy.Controllers
 
         [HttpPost]
         [Route("/login/login")]
-        public async Task<IActionResult> LoginProc([FromForm] UserModel input)
+        public async Task<IActionResult> LoginProc(string name, string password)
         {
             try
             {
-                input.ConvertPassword();
-                var user = input.GetLoginUser();
+                // name = test123 , password = 1234
+                MemberModel member = new MemberModel();
+                member.GetLoginUser(name);
+
+                member.ConvertPassword();
+
+                
 
                 // 로그인 작업
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.user_seq.ToString()));
-                identity.AddClaim(new Claim(ClaimTypes.Name, user.user_name));
-                identity.AddClaim(new Claim(ClaimTypes.Email, user.email));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, member.Member_seq.ToString()));
+                identity.AddClaim(new Claim(ClaimTypes.Name, member.Name));
+                identity.AddClaim(new Claim(ClaimTypes.Email, member.Email));
                 identity.AddClaim(new Claim("LastCheckDateTime", DateTime.UtcNow.ToString("yyyyMMddHHmmss")));
 
 
-                if (user.user_name == "okok")
+                if (member.Name == "admin")
                 {
                     identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
                 }
@@ -72,30 +77,63 @@ namespace Kyowon_Toy.Controllers
             }
         }
 
+
         public IActionResult Register(string msg)
         {
             ViewData["msg"] = msg;
             return View();
         }
 
-        [HttpPost]
+        /*
+         *  [HttpPost]
         [Route("/login/register")]
-        public IActionResult RegisterProc([FromForm] UserModel input)
+        public IActionResult RegisterProc([FromForm] MemberModel input)
         {
+
+            DateTime birthDay = input.birthyy
+
             try
             {
 
-                string password2 = Request.Form["password2"];
-
-                if (input.password != password2)
-                {
-                    throw new Exception("password와 password2가 다릅니다.");
-                }
+     
 
                 input.ConvertPassword();
 
                 // 성공
-                input.Register();
+                input.Insert();
+
+                return Redirect("/login/login");
+            }
+            catch (Exception ex)
+            {
+                // 실패
+                return Redirect($"/login/register?msg={HttpUtility.UrlEncode(ex.Message)}");
+
+            }
+        }
+         */
+
+        [HttpPost]
+        [Route("/login/register")]
+        public IActionResult RegisterProc(int grade, string name, string password, int birthyy,
+            int birthmm, int birthdd, string mobile_tel)
+        {
+            MemberModel member = new MemberModel();
+            member.Name = name;
+            member.Grade = grade;
+            member.Mobile_Tel = mobile_tel;
+            member.BirthDay = new DateTime(birthyy, birthmm, birthdd);
+            member.password = password;
+  
+            try
+            {
+
+                member.ConvertPassword();
+
+                
+                
+                // 성공
+                member.Insert();
 
                 return Redirect("/login/login");
             }
