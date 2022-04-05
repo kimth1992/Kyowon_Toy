@@ -52,22 +52,22 @@ namespace Kyowon_Toy.Controllers
         [Authorize]
         public IActionResult BoardEdit(uint idx, string type)
         {
-            var model = BoardModel.Get(idx);
+            var board = BoardModel.Get(idx);
 
             var userSeq = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (model.User != userSeq)
+            if (board.User != userSeq)
             {
                 throw new Exception("수정 할 수 없습니다.");
             }
 
             if (type == "U")
             {
-                return View(model);
+                return View(board);
             }
             else if (type == "D")
             {
-                model.Delete();
+                board.Delete();
                 return Redirect("/board/boardlist");
 
             }
@@ -96,7 +96,7 @@ namespace Kyowon_Toy.Controllers
 
             model.Update();
 
-            return Redirect("/home/boardlist");
+            return Redirect("/board/boardlist");
         }
 
     }

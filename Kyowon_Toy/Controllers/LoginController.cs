@@ -32,15 +32,14 @@ namespace Kyowon_Toy.Controllers
 
         [HttpPost]
         [Route("/login/login")]
-        public async Task<IActionResult> LoginProc(string name, string password)
+        public async Task<IActionResult> LoginProc([FromForm]MemberModel input)
         {
             try
             {
-                // name = test123 , password = 1234
-                MemberModel member = new MemberModel();
-                member.GetLoginUser(name);
+                    // name = test123 , password = 1234
+                input.ConvertPassword();
 
-                member.ConvertPassword();
+                var member = input.GetLoginUser();
 
                 
 
@@ -48,9 +47,9 @@ namespace Kyowon_Toy.Controllers
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, member.Member_seq.ToString()));
-                identity.AddClaim(new Claim(ClaimTypes.Name, member.Name));
-                identity.AddClaim(new Claim(ClaimTypes.Email, member.Email));
-                identity.AddClaim(new Claim("LastCheckDateTime", DateTime.UtcNow.ToString("yyyyMMddHHmmss")));
+               identity.AddClaim(new Claim(ClaimTypes.Name, member.Name));
+               //identity.AddClaim(new Claim(ClaimTypes.Email, member.Email));
+               identity.AddClaim(new Claim("LastCheckDateTime", DateTime.UtcNow.ToString("yyyyMMddHHmmss")));
 
 
                 if (member.Name == "admin")
@@ -116,8 +115,9 @@ namespace Kyowon_Toy.Controllers
         [HttpPost]
         [Route("/login/register")]
         public IActionResult RegisterProc(int grade, string name, string password, int birthyy,
-            int birthmm, int birthdd, string mobile_tel)
+            int birthmm, int birthdd, string mobile_tel, string email)
         {
+  
             MemberModel member = new MemberModel();
             member.Name = name;
             member.Grade = grade;
@@ -127,13 +127,32 @@ namespace Kyowon_Toy.Controllers
   
             try
             {
+                Debug.WriteLine("--------------");
 
                 member.ConvertPassword();
-
-                
-                
-                // 성공
+                Debug.WriteLine("비밀번호 변경 완료!");
                 member.Insert();
+
+                Debug.WriteLine("--------------");
+
+                var member2 = MemberModel.Get(member.Name);
+                member2.Email = member2.Member_seq + "@Kyowon.co.kr";
+                Debug.WriteLine("새로 생성된 계정의 시퀀스 번호 -> " + member2.Member_seq);
+                Debug.WriteLine("새로 등록할 이메일 -> " + member2.Member_seq+"kyowon.co.kr");
+
+                member2.UpdateEmail();
+
+                Debug.WriteLine("새로 생성된 계정의 이메일1111 -> " + member2.Email);
+
+
+
+
+                // member2.UpdateEmail();
+
+
+
+
+                // 이메일 생성
 
                 return Redirect("/login/login");
             }

@@ -2,6 +2,7 @@
 using KyowonToy.lib.DataBase;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Kyowon_Toy.Models
@@ -113,8 +114,35 @@ now(),
             }
         }
 
+        public int UpdateEmail()
+        {
+           // Debug.WriteLine("ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ");
 
-        internal MemberModel GetLoginUser(string name)
+          //  Debug.WriteLine("새로 생성된 계정의 이메일 -> " + email);
+
+            string sql = @"
+Update member set email = @email where member_seq = @member_seq";
+            using (var db = new MysqlDapperHelper())
+            {
+                return db.Execute(sql, this);
+            }
+        }
+
+        public static MemberModel Get(string name)
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select member_seq, name, password, department, position, photo, email, office_tel,
+mobile_tel, registeredDate, address, active from member where name = @name";
+                return db.QuerySingle<MemberModel>(sql, new { name = name });
+            }
+        }
+
+
+
+
+        internal MemberModel GetLoginUser()
         {
             /*this.user_name
             this.password*/
@@ -127,8 +155,6 @@ where name = @name";
             MemberModel member;
             using (var db = new MysqlDapperHelper())
             {
-
-
                 member = db.QuerySingle<MemberModel>(sql, this);
             }
 
@@ -140,6 +166,7 @@ where name = @name";
             if (member.password != this.password)
             {
                 throw new Exception("비밀번호가 틀립니다!");
+                // 비밀번호 틀린 횟수
             }
 
             return member;
