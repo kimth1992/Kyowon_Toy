@@ -3,390 +3,406 @@
 }
 <html>
 <head>
-  <title>회원가입</title>
-  
-<script>
- 
-function idCheck(){
-  
-  window.open("${contextPath}/app/member/idCheckForm.jsp", "IdCheck", "width=400 height = 350")
-  
-}
-function nicknameCheck(){
-    
-   window.open("${contextPath}/member/NicknameCheckForm.jsp", "NicknameCheck", "width=400 height = 350")
-    
-  }
-</script>
+    <title>회원가입</title>
 
-<script type="text/javascript">
-    
-        // 필수 입력정보인 아이디, 비밀번호가 입력되었는지 확인하는 함수
-        function checkValue()
-        {
-         
-            /*
-           if(!document.userInfo.grade.value){
-                alert("회원구분을 선택하세요.");
-                return false;
-            }
-            */
-          
-            if(!document.userInfo.name.value){
-                alert("이름을 입력하세요.");
-                return false;
-            } 
-               /*
-            if(!document.userInfo.nickname.value){
-                alert("별명을 입력하세요.");
-                return false;
-            } 
-            */
-         /*  if(!document.userInfo.nicNameDuplication.value != "nicNameCheck"){
-                alert("별명 중복체크를 해주세요.");
-                return false;
-            } 
-         */
-               /*
-            if(!document.userInfo.id.value){
-                alert("아이디를 입력하세요.");
-                return false;
-            }
-            */
-            
-      /*       if(!document.userInfo.idDuplication.value != "idCheck"){
-                alert("아이디 중복체크를 해주세요.");
-                return false;
-            }  */
-            
-            if(!document.userInfo.password.value){
-                alert("비밀번호를 입력하세요.");
-                return false;
-            }
-            
-            // 비밀번호와 비밀번호 확인에 입력된 값이 동일한지 확인
-            if(document.userInfo.password.value != document.userInfo.passwordcheck.value ){
-                alert("비밀번호를 동일하게 입력하세요.");
-                return false;
-            }
-          
-            /*
-            if(!document.userInfo.email.value){
-                alert("이메일을 입력하세요.");
-                return false;
-            }
-            */
-            
-            if(!document.userInfo.birthyy.value){
-                alert("생년월일을 입력하세요.");
-                return false;
-            }
-            if(!document.userInfo.birthmm.value){
-                alert("생년월일을 입력하세요.");
-                return false;
-            }
-            if(!document.userInfo.birthdd.value){
-                alert("생년월일을 입력하세요.");
-                return false;
-            }
-            if(!document.userInfo.tel.value){
-                alert("연락처를 입력하세요.");
-                return false;
-            }
-            /*
-            if(!document.userInfo.sex.value){
-                alert("성별을 선택하세요.");
-                return false;
-            }
-            */
+    <script>
+
+        function idCheck(){
+
+          window.open("${contextPath}/app/member/idCheckForm.jsp", "IdCheck", "width=400 height = 350")
+
+        }
+        function nicknameCheck(){
+
+           window.open("${contextPath}/member/NicknameCheckForm.jsp", "NicknameCheck", "width=400 height = 350")
+
+          }
+    </script>
+
+    <script type="text/javascript">
+
+          // 필수 입력정보인 아이디, 비밀번호가 입력되었는지 확인하는 함수
+          function checkValue()
+          {
+
+              /*
+             if(!document.userInfo.grade.value){
+                  alert("회원구분을 선택하세요.");
+                  return false;
+              }
+              */
+
+              if(!document.userInfo.name.value){
+                  alert("이름을 입력하세요.");
+                  return false;
+              }
+                 /*
+              if(!document.userInfo.nickname.value){
+                  alert("별명을 입력하세요.");
+                  return false;
+              }
+              */
+           /*  if(!document.userInfo.nicNameDuplication.value != "nicNameCheck"){
+                  alert("별명 중복체크를 해주세요.");
+                  return false;
+              }
+           */
+                 /*
+              if(!document.userInfo.id.value){
+                  alert("아이디를 입력하세요.");
+                  return false;
+              }
+              */
+
+        /*       if(!document.userInfo.idDuplication.value != "idCheck"){
+                  alert("아이디 중복체크를 해주세요.");
+                  return false;
+              }  */
+
+              if(!document.userInfo.password.value){
+                  alert("비밀번호를 입력하세요.");
+                  return false;
+              }
+
+              // 비밀번호와 비밀번호 확인에 입력된 값이 동일한지 확인
+              if(document.userInfo.password.value != document.userInfo.passwordcheck.value ){
+                  alert("비밀번호를 동일하게 입력하세요.");
+                  return false;
+              }
+
+              /*
+              if(!document.userInfo.email.value){
+                  alert("이메일을 입력하세요.");
+                  return false;
+              }
+              */
+
+              if(!document.userInfo.birthyy.value){
+                  alert("생년월일을 입력하세요.");
+                  return false;
+              }
+              if(!document.userInfo.birthmm.value){
+                  alert("생년월일을 입력하세요.");
+                  return false;
+              }
+              if(!document.userInfo.birthdd.value){
+                  alert("생년월일을 입력하세요.");
+                  return false;
+              }
+
+              if(!document.userInfo.tel.value){
+                  alert("연락처를 입력하세요.");
+                  return false;
+              }
+              /*
+              if(!document.userInfo.sex.value){
+                  alert("성별을 선택하세요.");
+                  return false;
+              }
+              */
+          }
+    </script>
+
+    <script>
+        function div_OnOff(v,id){
+         // 라디오 버튼 value 값 조건 비교
+         if(v == "2"){
+          document.getElementById(id).style.display = ""; // 보여줌
+         }else{
+          document.getElementById(id).style.display = "none"; // 숨김
+         }
         }
     </script>
-    
- <script>
-function div_OnOff(v,id){
- // 라디오 버튼 value 값 조건 비교
- if(v == "2"){
-  document.getElementById(id).style.display = ""; // 보여줌
- }else{
-  document.getElementById(id).style.display = "none"; // 숨김
- }
-}
-</script>
 
 
 
 
-  
-  <style>
-  .container {
-    xborder: 1px solid red;
-    width: 640px;
-  }
-  .gender{
-    xborder: 1px solid red;
-    width: 100px;
-    margin-top: 5px;
-  }
-  </style>
-  
+
+    <style>
+        .container {
+            xborder: 1px solid red;
+            width: 640px;
+        }
+
+        .gender {
+            xborder: 1px solid red;
+            width: 100px;
+            margin-top: 5px;
+        }
+    </style>
+
 </head>
 <body>
-<div class="container">
+    <div class="container">
 
-<h1 style="text-align : center">회원가입</h1>
-<form name = "userInfo" action='/login/register' method='post'  enctype="multipart/form-data" onsubmit="return checkValue()" >
+        <h1 style="text-align : center">회원가입</h1>
+        <form name="userInfo" action='/login/register' method='post' enctype="multipart/form-data" onsubmit="return checkValue()">
 
-<div class="col-md-12" style ="text-align : center">
-  <h3 for="validationServer04" class="form-label" >-교원에 입사하신 것을 환영합니다-</h3>
+            <div class="col-md-12" style="text-align : center">
+                <h3 for="validationServer04" class="form-label">-교원에 입사하신 것을 환영합니다-</h3>
+
+            </div>
+
+            <br />
+
+            <div class="mb-3 row">
+                <label for='f-grade' class="col-sm-3 col-form-label"> 구분</label>
+                <div class="col-sm-6">
+                    <input id='member' type='radio' name='grade' value="1" onclick="div_OnOff(this.value,'con');">
+                    <label>신입</label>
+                    <input id='doctor' type='radio' name='grade' value="2" onclick="div_OnOff(this.value,'con');">
+                    <label>경력</label>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label for='f-name' class="col-sm-3 col-form-label">* 이름</label>
+                <div class="col-sm-6">
+                    <input id='f-name' type='text' name='name' class="form-control">
+                </div>
+            </div>
+
+
+            <!--
+              <div class="mb-3 row">
+                <label for='f-nickname' class="col-sm-3 col-form-label">* 별명</label>
+                <div class="col-sm-6">
+                  <input id='f-nickname' type='text' name='nickname' class ="form-control">
+                 <div class="invalid-feedback">
+                    이미 존재하는 별명입니다.
+                 </div>
+               </div>
+                 <div class ="col-auto">
+                   <button id = "x-nickname-check-btn" type ="button" class ="btn btn-primary form-control">중복검사</button>
+                </div>
+
+            </div>
+             -->
+            <!--  ID 부분
+            <div class="mb-3 row">
+                <label for='f-id' class="col-sm-3 col-form-label">* 아이디</label>
+                <div class="col-sm-6">
+                  <input id='f-id' type='text' name='id' class ="form-control">
+                  <div class="invalid-feedback">
+                    이미 존재하는 아이디입니다.
+                </div>
+               </div>
+               <div class ="col-auto">
+                <button id ="x-id-check-btn" type = "button" class ="btn btn-primary form-control">중복검사</button>
+                </div>
+            </div>
+
+            -->
+
+
+
+            <div class="mb-3 row">
+                <label for='f-password' class="col-sm-3 col-form-label">* 비밀번호</label>
+                <div class="col-sm-6">
+                    <input id='f-password' type='password' name='password' class="form-control">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for='f-passwordcheck' class="col-sm-3 col-form-label">* 비밀번호확인</label>
+                <div class="col-sm-6">
+                    <input id='f-passwordcheck' type='password' name='passwordcheck' class="form-control">
+                </div>
+            </div>
+            <!-- 이메일 부분
+            <div class="mb-3 row">
+                <label for='f-email' class="col-sm-3 col-form-label">* 이메일</label>
+                <div class="col-sm-6">
+                  <input id='f-email' type='email' name='email' class="form-control">
+                </div>
+            </div>
+            -->
+            <div class="mb-3 row">
+                <label for='f-department' class="col-sm-3 col-form-label">부서</label>
+                <div class="col-sm-6">
+                    <select class="form-select" aria-label="Default select example" name="department">
+                        <option value="" selected disabled hidden>-부서선택-</option>
+                        <option value="구몬사업본부">구몬사업본부</option>
+                        <option value="EDU사업본부">EDU사업본부</option>
+                        <option value="Wells사업본부">Wells사업본부</option>
+                        <option value="투자사업본부">투자사업본부</option>
+                        <option value="디지털융합사업본부">디지털융합사업본부</option>
+                        <option value="라이프사업본부">라이프사업본부</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for='f-birth' class="col-sm-3 col-form-label"> 생일</label>
+                <div class="col-sm-6">
+                    <input id='f-birth' type="text" name="birthyy" maxlength="4" placeholder="년(4자)" size="6">
+                    <select name="birthmm">
+                        <option value="">월</option>
+                        <option value="01">1</option>
+                        <option value="02">2</option>
+                        <option value="03">3</option>
+                        <option value="04">4</option>
+                        <option value="05">5</option>
+                        <option value="06">6</option>
+                        <option value="07">7</option>
+                        <option value="08">8</option>
+                        <option value="09">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                    <input type="text" name="birthdd" maxlength="2" placeholder="일" size="4">
+
+                </div>
+            </div>
+
+
+            <div class="mb-3 row">
+                <label for='f-tel' class="col-sm-3 col-form-label"> * 연락처(Ajax 이걸로 쓰자)</label>
+                <div class="col-sm-6">
+                    <input id='f-tel' type='tel' name='mobile_tel' placeholder="010-0000-0000" class="form-control">
+                    <div class="invalid-feedback">
+                        이미 존재하는 연락처입니다.
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button id="x-tel-check-btn" type="button" class="btn btn-primary form-control">중복검사</button>
+                </div>
+            </div>
+
+            <!--
+              <div class="mb-3 row">
+                <label for='f-nickname' class="col-sm-3 col-form-label">* 별명</label>
+                <div class="col-sm-6">
+                  <input id='f-nickname' type='text' name='nickname' class ="form-control">
+                 <div class="invalid-feedback">
+                    이미 존재하는 별명입니다.
+                 </div>
+               </div>
+                 <div class ="col-auto">
+                   <button id = "x-nickname-check-btn" type ="button" class ="btn btn-primary form-control">중복검사</button>
+                </div>
+
+            </div>
+             -->
+
+
+
+            <div class="mb-3 row">
+                <label for='f-photo' class="col-sm-3 col-form-label">사진</label>
+                <div class="col-sm-6">
+                    <input id='f-photo' type='file' name='photoPart' class="form-control">
+                </div>
+            </div>
+
+            <!--
+              <div class="mb-3 row">
+                <label for='f-grade' class="col-sm-3 col-form-label">* 성별</label>
+                <div class="col-sm-6">
+                  <input id='f-sex' type='radio' name='sex' value = "남">
+                  <label>남자</label>
+                  <input id='f-sex' type='radio' name='sex' value = "여">
+                  <label>여자</label>
+                </div>
+            </div>
+            -->
+
+
+            <div id="con" style="display:none">
+
+                <!--
+                 <div class="mb-3 row" >
+                    <label for='f-major' class="col-sm-3 col-form-label">* 전문분야</label>
+                    <div class="col-sm-6">
+                     <input id='f-major' type='text' name='major' class="form-control">
+                    </div>
+                </div>
+                -->
+
+                <div class="mb-3 row">
+                    <label for='f-license' class="col-sm-3 col-form-label">경력 기술서</label>
+                    <div class="col-sm-6">
+                        <input id='f-license' type='file' name='license' class="form-control">
+                    </div>
+                </div>
+
+                <!--
+                 <div class="mb-3 row" >
+                    <label for='f-page' class="col-sm-3 col-form-label">홈페이지</label>
+                    <div class="col-sm-6">
+                     <input id='f-page' type='text' name='homepage' class="form-control">
+                    </div>
+                </div>
+                -->
+
+                <div class="mb-3 row">
+                    <label for='f-introduce' class="col-sm-3 col-form-label">인사말</label>
+                    <div class="col-sm-6">
+                        <input id='f-introduce' type='text' name='introduce' class="form-control">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-12">
+                <button id="x-add-btn" class="btn btn-primary btn-sm">등록</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- .container -->
+    <!-- <label for='f-name'>이름</label> <input id='f-name' type='text' name='name'><br>
+    <label for='f-email'>이메일</label> <input id='f-email' type='email' name='email'><br>
+    <label for='f-password'>암호</label> <input id='f-password' type='password' name='password'><br>
+    <label for='f-photo'>사진</label> <input id='f-photo' type='text' name='photo'><br>
+    <label for='f-tel'>전화</label> <input id='f-tel' type='tel' name='tel'><br>
+    <button>등록</button><br>
+    </form>  -->
+
+    <script>
+         var addBtn = document.querySelector("#x-add-btn");
+         //var nicknameTag = document.querySelector("#f-nickname");
+         var telTag = document.querySelector("#f-tel");
+         var idTag = document.querySelector("#f-id");
+
+         //addBtn.setAttribute("disabled", "disabled");
+
+        document.querySelector ("#x-tel-check-btn").onclick = () => {
+             var xhr = new XMLHttpRequest();
+             xhr.addEventListener("load", function() {
+                  if (this.responseText == "false"){
+                      addBtn.removeAttribute("disabled");
+                       telTag.classList.remove("is-invalid");
+                  } else {
+                    //  addBtn.setAttribute("disabled", "disabled");
+                      telTag.classList.add("is-invalid");
+                  }
+                  })
+                  xhr.open("get","checkTel?tel=" + telTag.value);
+                xhr.send();
+        };
  
-</div>
 
-    <br />
+        /*
+        document.querySelector ("#x-id-check-btn").onclick = () =>{
+               var xhr = new XMLHttpRequest();
+               xhr.addEventListener("load", function() {
+                  if (this.responseText == "false"){
+                     addBtn.removeAttribute("disabled");
+                     idTag.classList.remove("is-invalid");
+                  } else {
+                    addBtn.setAttribute("disabled","disabled");
+                    idTag.classList.add("is-invalid");
+                  }
+                  })
+                  xhr.open("get","checkId?id=" + idTag.value);
+                  xhr.send();
+            };
 
-  <div class="mb-3 row">
-    <label for='f-grade' class="col-sm-3 col-form-label"> 구분</label>
-    <div class="col-sm-6">
-      <input id='member' type='radio' name='grade' value = "1" onclick="div_OnOff(this.value,'con');">
-      <label>신입</label>
-      <input id='doctor' type='radio' name='grade' value = "2" onclick="div_OnOff(this.value,'con');">
-      <label>경력</label>
-    </div>
-</div>
-
-  <div class="mb-3 row">
-    <label for='f-name' class="col-sm-3 col-form-label">* 이름</label>
-    <div class="col-sm-6">
-      <input id='f-name' type='text' name='name' class="form-control">
-    </div>
-</div> 
+            */
 
 
-<!--
-  <div class="mb-3 row">
-    <label for='f-nickname' class="col-sm-3 col-form-label">* 별명</label>
-    <div class="col-sm-6">
-      <input id='f-nickname' type='text' name='nickname' class ="form-control">
-     <div class="invalid-feedback">
-        이미 존재하는 별명입니다.
-     </div>
-   </div>
-     <div class ="col-auto">
-       <button id = "x-nickname-check-btn" type ="button" class ="btn btn-primary form-control">중복검사</button>
-    </div>
-    
-</div>
- -->
-
- <!--  ID 부분
-<div class="mb-3 row">
-    <label for='f-id' class="col-sm-3 col-form-label">* 아이디</label>
-    <div class="col-sm-6">
-      <input id='f-id' type='text' name='id' class ="form-control">
-      <div class="invalid-feedback">
-        이미 존재하는 아이디입니다.
-    </div>
-   </div>
-   <div class ="col-auto">
-    <button id ="x-id-check-btn" type = "button" class ="btn btn-primary form-control">중복검사</button>
-    </div>
-</div>
-
--->
-
-
-
-<div class="mb-3 row">
-  <label for='f-password' class="col-sm-3 col-form-label">* 비밀번호</label>
-  <div class="col-sm-6">
-    <input id='f-password' type='password' name='password' class="form-control">
-  </div>
-</div>
-<div class="mb-3 row">
-  <label for='f-passwordcheck' class="col-sm-3 col-form-label">* 비밀번호확인</label>
-  <div class="col-sm-6">
-    <input id='f-passwordcheck' type='password' name='passwordcheck' class="form-control">
-  </div>
-</div>
-<!-- 이메일 부분
-<div class="mb-3 row">
-    <label for='f-email' class="col-sm-3 col-form-label">* 이메일</label>
-    <div class="col-sm-6">
-      <input id='f-email' type='email' name='email' class="form-control">
-    </div>
-</div>
--->
-<div class="mb-3 row">
-  <label for='f-birth' class="col-sm-3 col-form-label">* 생일</label>
-  <div class="col-sm-6">
-      <input id = 'f-birth' type="text" name="birthyy"  maxlength="4" placeholder="년(4자)" size="6" >
-          <select name="birthmm">
-              <option value="">월</option>
-              <option value="01" >1</option>
-              <option value="02" >2</option>
-              <option value="03" >3</option>
-              <option value="04" >4</option>
-              <option value="05" >5</option>
-              <option value="06" >6</option>
-              <option value="07" >7</option>
-              <option value="08" >8</option>
-              <option value="09" >9</option>
-              <option value="10" >10</option>
-              <option value="11" >11</option>
-              <option value="12" >12</option>
-            </select>
-        <input type="text" name="birthdd" maxlength="2" placeholder="일" size="4" >
-
-  </div>
-  </div>
-
-
-<div class="mb-3 row">
-  <label for='f-tel' class="col-sm-3 col-form-label"> * 연락처(Ajax 이걸로 쓰자)</label>
-  <div class="col-sm-6">
-    <input id='f-tel' type='tel' name='mobile_tel' placeholder ="010-0000-0000" class="form-control">
-    <div class="invalid-feedback">
-        이미 존재하는 연락처입니다.
-     </div>
-  </div>
-   <div class ="col-auto">
-       <button id = "x-tel-check-btn" type ="button" class ="btn btn-primary form-control">중복검사</button>
-    </div>
-</div>
-
-<!--
-  <div class="mb-3 row">
-    <label for='f-nickname' class="col-sm-3 col-form-label">* 별명</label>
-    <div class="col-sm-6">
-      <input id='f-nickname' type='text' name='nickname' class ="form-control">
-     <div class="invalid-feedback">
-        이미 존재하는 별명입니다.
-     </div>
-   </div>
-     <div class ="col-auto">
-       <button id = "x-nickname-check-btn" type ="button" class ="btn btn-primary form-control">중복검사</button>
-    </div>
-    
-</div>
- -->
-
-
-
-<div class="mb-3 row">
-  <label for='f-photo' class="col-sm-3 col-form-label">사진</label>
-  <div class="col-sm-6">
-    <input id='f-photo' type='file' name='photoPart' class="form-control">
-  </div>
-</div>
-
-<!--
-  <div class="mb-3 row">
-    <label for='f-grade' class="col-sm-3 col-form-label">* 성별</label>
-    <div class="col-sm-6">
-      <input id='f-sex' type='radio' name='sex' value = "남">
-      <label>남자</label>
-      <input id='f-sex' type='radio' name='sex' value = "여">
-      <label>여자</label>
-    </div>
-</div>
--->
-
-
-<div id="con" style = "display:none">
-
-    <!-- 
- <div class="mb-3 row" >
-    <label for='f-major' class="col-sm-3 col-form-label">* 전문분야</label>
-    <div class="col-sm-6">
-     <input id='f-major' type='text' name='major' class="form-control">
-    </div>
-</div>
--->
-
- <div class="mb-3 row" >
-    <label for='f-license' class="col-sm-3 col-form-label">경력 기술서</label>
-    <div class="col-sm-6">
-     <input id='f-license' type='file' name='license' class="form-control">
-    </div>
-</div>
-
-<!--
- <div class="mb-3 row" >
-    <label for='f-page' class="col-sm-3 col-form-label">홈페이지</label>
-    <div class="col-sm-6">
-     <input id='f-page' type='text' name='homepage' class="form-control">
-    </div>
-</div>
--->
-
- <div class="mb-3 row" >
-    <label for='f-introduce' class="col-sm-3 col-form-label">인사말</label>
-    <div class="col-sm-6">
-     <input id='f-introduce' type='text' name='introduce' class="form-control">
-    </div>
-</div>
-
-</div>
-
-  <div class="col-12">
-    <button id ="x-add-btn" class ="btn btn-primary btn-sm">등록</button>
-  </div>
-
-</form>
-</div>
-
-<!-- .container -->
-<!-- <label for='f-name'>이름</label> <input id='f-name' type='text' name='name'><br>
-<label for='f-email'>이메일</label> <input id='f-email' type='email' name='email'><br>
-<label for='f-password'>암호</label> <input id='f-password' type='password' name='password'><br>
-<label for='f-photo'>사진</label> <input id='f-photo' type='text' name='photo'><br>
-<label for='f-tel'>전화</label> <input id='f-tel' type='tel' name='tel'><br>
-<button>등록</button><br>
-</form>  -->
-
- <script>
- var addBtn = document.querySelector("#x-add-btn");
- //var nicknameTag = document.querySelector("#f-nickname");
- var telTag = document.querySelector("#f-tel");
- var idTag = document.querySelector("#f-id");
- 
- //addBtn.setAttribute("disabled", "disabled");
-
-document.querySelector ("#x-tel-check-btn").onclick = () => {
-	 var xhr = new XMLHttpRequest();
-	 xhr.addEventListener("load", function() {
-		  if (this.responseText == "false"){
-			  addBtn.removeAttribute("disabled");
-			   telTag.classList.remove("is-invalid");
-		  } else {
-			//  addBtn.setAttribute("disabled", "disabled");
-			  telTag.classList.add("is-invalid");
-		  }
-		  })
-		  xhr.open("get","checkTel?tel=" + telTag.value);
-	    xhr.send();
-};
-FFRFH35U
-
-/*
-document.querySelector ("#x-id-check-btn").onclick = () =>{
-	   var xhr = new XMLHttpRequest();
-	   xhr.addEventListener("load", function() {
-	      if (this.responseText == "false"){
-	         addBtn.removeAttribute("disabled");
-	         idTag.classList.remove("is-invalid");
-	      } else {
-	        addBtn.setAttribute("disabled","disabled");
-	        idTag.classList.add("is-invalid");
-	      }
-	      })
-	      xhr.open("get","checkId?id=" + idTag.value);
-	      xhr.send();
-	};
-
-    */
-
- 
- </script>
+    </script>
 
 
 

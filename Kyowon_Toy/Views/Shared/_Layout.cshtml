@@ -320,9 +320,9 @@
                                aria-haspopup="true" aria-expanded="false">
                                 <img src="/lib/adminmart-lite/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                      width="40">
-                                <span class="ml-2 d-none d-lg-inline-block">
-                                    <span>Hello,</span> <span class="text-dark">@User.Identity.Name</span> <i data-feather="chevron-down"
-                                                                                                    class="svg-icon"></i>
+                                <span>
+                                     <span class="text-dark">@User.Identity.Name</span><span class="text-dark">님, 안녕하세요.</span> 
+                                     <i data-feather="chevron-down" class="svg-icon"></i>
                                 </span>
                             </a>
 
@@ -641,6 +641,7 @@
             <li class="list-divider"></li>
             <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
 
+            <!-- 사이드바 로그인 -->
             <li class="sidebar-item">
                 <a class="sidebar-link sidebar-link" href="/Login/Login"
                    aria-expanded="false">
@@ -649,6 +650,8 @@
                     </span>
                 </a>
             </li>
+              <!-- 사이드바 로그인 -->
+
             <li class="sidebar-item">
                 <a class="sidebar-link sidebar-link"
                    href="/Login/register" aria-expanded="false">
@@ -827,11 +830,10 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
-                @RenderBody();
+                @RenderBody()
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
-            <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->

@@ -3,6 +3,12 @@
 
 }
 
+<style>
+th {
+  text-align: center;
+}
+</style>
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -14,13 +20,15 @@
                             <col style = "width:auto" />
                             <col style = "width:100px" />
                             <col style = "width:100px" />
+                            <col style = "width:20px" />
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>번호</th>
-                                <th>제목</th>
-                                <th>등록자</th>
+                                <th><center>제목</center></th>
+                                <th><center>등록자</center></th>
                                 <th>등록일시</th>
+                                <th><center>조회수</center></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,10 +36,11 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.Idx</td>
+                                    <td text-align: center>@item.Idx</td>
                                     <td><a href = "/board/boardView?idx=@item.Idx">@item.Title</a></td>
                                     <td>@item.UserName</td>
                                     <td>@item.Date</td>
+                                    <td><center>@item.View_Cnt</center></td>
                                 </tr>
                             }
                         </tbody>

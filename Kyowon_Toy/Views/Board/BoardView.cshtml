@@ -27,15 +27,17 @@
                     </table>
                 </div>
 
+
+
                 <div class="text-right">
-                    @if(Model.User == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                    @if (Model.User == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                     {
-                    <button id="btnU" class ="btn btn-sm btn-primary">수정</button>
-                    <button id="btnD" class ="btn btn-sm btn-danger">삭제</button>
-                    <form id = "form1" method = "post" action="/board/boardEdit">
-                        <input type = "hidden" name ="idx" value="@Model.Idx">
-                        <input type = "hidden" name="type" value="">
-                    </form>
+                        <button id="btnU" class="btn btn-sm btn-primary">수정</button>
+                        <button id="btnD" class="btn btn-sm btn-danger">삭제</button>
+                        <form id="form1" method="post" action="/board/boardEdit">
+                            <input type="hidden" name="idx" value="@Model.Idx">
+                            <input type="hidden" name="type" value="">
+                        </form>
                     }
                 </div>
             </div>

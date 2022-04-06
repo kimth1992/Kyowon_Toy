@@ -111,11 +111,12 @@ namespace Kyowon_Toy.Controllers
             }
         }
          */
+     
 
         [HttpPost]
         [Route("/login/register")]
         public IActionResult RegisterProc(int grade, string name, string password, int birthyy,
-            int birthmm, int birthdd, string mobile_tel, string email)
+            int birthmm, int birthdd, string mobile_tel, string department)
         {
   
             MemberModel member = new MemberModel();
@@ -124,26 +125,19 @@ namespace Kyowon_Toy.Controllers
             member.Mobile_Tel = mobile_tel;
             member.BirthDay = new DateTime(birthyy, birthmm, birthdd);
             member.password = password;
+            member.Department = department;
   
             try
             {
-                Debug.WriteLine("--------------");
 
                 member.ConvertPassword();
-                Debug.WriteLine("비밀번호 변경 완료!");
-                member.Insert();
 
-                Debug.WriteLine("--------------");
+                member.Insert();
 
                 var member2 = MemberModel.Get(member.Name);
                 member2.Email = member2.Member_seq + "@Kyowon.co.kr";
-                Debug.WriteLine("새로 생성된 계정의 시퀀스 번호 -> " + member2.Member_seq);
-                Debug.WriteLine("새로 등록할 이메일 -> " + member2.Member_seq+"kyowon.co.kr");
 
                 member2.UpdateEmail();
-
-                Debug.WriteLine("새로 생성된 계정의 이메일1111 -> " + member2.Email);
-
 
 
 

@@ -98,7 +98,8 @@ password,
 birthDay,
 mobile_tel, 
 registeredDate,
-active
+active,
+department
 )
 values(
 @grade,
@@ -107,7 +108,8 @@ values(
 @birthday,
 @mobile_tel, 
 now(),
-1)";
+1,
+@department)";
             using (var db = new MysqlDapperHelper())
             {
                 return db.Execute(sql, this);
@@ -150,7 +152,7 @@ mobile_tel, registeredDate, address, active from member where name = @name";
             string sql = @"
 select member_seq, name, password, department, position, registeredDate, email, mobile_tel
 from member
-where name = @name";
+where member_seq = @member_seq";
 
             MemberModel member;
             using (var db = new MysqlDapperHelper())
