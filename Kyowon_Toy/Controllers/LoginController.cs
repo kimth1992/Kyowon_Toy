@@ -46,13 +46,13 @@ namespace Kyowon_Toy.Controllers
                 // 로그인 작업
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, member.Member_seq.ToString()));
-               identity.AddClaim(new Claim(ClaimTypes.Name, member.Name));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, member.member_seq.ToString()));
+               identity.AddClaim(new Claim(ClaimTypes.Name, member.name));
                //identity.AddClaim(new Claim(ClaimTypes.Email, member.Email));
                identity.AddClaim(new Claim("LastCheckDateTime", DateTime.UtcNow.ToString("yyyyMMddHHmmss")));
 
 
-                if (member.Name == "admin")
+                if (member.name == "admin")
                 {
                     identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
                 }
@@ -120,12 +120,12 @@ namespace Kyowon_Toy.Controllers
         {
   
             MemberModel member = new MemberModel();
-            member.Name = name;
-            member.Grade = grade;
-            member.Mobile_Tel = mobile_tel;
-            member.BirthDay = new DateTime(birthyy, birthmm, birthdd);
+            member.name = name;
+            member.grade = grade;
+            member.mobile_Tel = mobile_tel;
+            member.birthDay = new DateTime(birthyy, birthmm, birthdd);
             member.password = password;
-            member.Department = department;
+            member.department = department;
   
             try
             {
@@ -134,16 +134,12 @@ namespace Kyowon_Toy.Controllers
 
                 member.Insert();
 
-                var member2 = MemberModel.Get(member.Name);
-                member2.Email = member2.Member_seq + "@Kyowon.co.kr";
+                var member2 = MemberModel.Get(member.name);
+                member2.email = member2.member_seq + "@Kyowon.co.kr";
 
                 member2.UpdateEmail();
 
-
-
                 // member2.UpdateEmail();
-
-
 
 
                 // 이메일 생성

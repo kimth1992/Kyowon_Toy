@@ -9,22 +9,21 @@ namespace Kyowon_Toy.Models
 {
     public class MemberModel
     {
-        public int Member_seq { get; set; }
-        public string Name { get; set; }
+        public int member_seq { get; set; }
+        public string name { get; set; }
         public string password { get; set; }
-        public DateTime BirthDay { get; set; }
-        public int Grade { get; set; }
-
-        public string Department { get; set; }
-        public string Position { get; set; }
-        public string Photo { get; set; }
-        public DateTime RegisteredDate { get; set; }
-        public DateTime WithdrawalDate { get; set; }
-        public string Email { get; set; }
-        public string Office_Tel { get; set; }
-        public string Mobile_Tel { get; set; }
-        public string Address { get; set; }
-        public int Active { get; set; }
+        public DateTime birthDay { get; set; }
+        public int grade { get; set; }
+        public string department { get; set; }
+        public string position { get; set; }
+        public string photo { get; set; }
+        public DateTime registeredDate { get; set; }
+        public DateTime withdrawalDate { get; set; }
+        public string email { get; set; }
+        public string office_Tel { get; set; }
+        public string mobile_Tel { get; set; }
+        public string address { get; set; }
+        public int active { get; set; }
 
 
 

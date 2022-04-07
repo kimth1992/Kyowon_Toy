@@ -12,7 +12,7 @@ namespace Kyowon_Toy.Models
         public string Contents { get; set; }
         public uint User { get; set; }
         public string UserName { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime registeredDate { get; set; }
 
         public uint View_Cnt { get; set; }
         public short Status_Flag { get; set; }
@@ -23,7 +23,7 @@ namespace Kyowon_Toy.Models
             {
                 string sql = @"
 select
-idx, title, user, username, date, view_cnt, status_flag from board where
+idx, title, user, username, registeredDate, view_cnt, status_flag from board where
 title like concat('%', IFNULL(@search,''), '%')
 order by idx desc";
 
@@ -37,7 +37,7 @@ order by idx desc";
             using (var db = new MysqlDapperHelper())
             {
                 string sql = @"
-select idx, title, contents, user, username, date, view_cnt from board where idx = @idx";
+select idx, title, contents, user, username, registeredDate, view_cnt from board where idx = @idx";
                 return db.QuerySingle<BoardModel>(sql, new { idx = idx });
             }
         }
@@ -68,7 +68,7 @@ title,
 contents, 
 user, 
 username, 
-date, 
+registeredDate, 
 view_cnt, 
 status_flag
 )
