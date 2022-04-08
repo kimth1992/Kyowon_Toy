@@ -16,14 +16,47 @@ namespace Kyowon_Toy.Controllers
     {
         public IActionResult Index()
         {
+        
             return View();
         }
 
 
-        public IActionResult BoardList(string search)
+        public IActionResult BoardList(string search, int page)
         {
-            return View(BoardModel.GetList(search));
+
+            int maxListCount = 10;
+            List<BoardModel> boards = BoardModel.BoardAll();
+            //var boards = BoardModel.BoardAll();
+
+            int totalCount = boards.Count();
+
+            int totalPageCount = totalCount / maxListCount;
+            if (totalCount % maxListCount > 0)
+            {
+                totalPageCount++;
+            }
+
+         var answer = boards.OrderByDescending(x=>x.registeredDate).Skip((page -1) * maxListCount).Take(maxListCount).ToList();
+         
+
+            ViewBag.Page = page;
+            ViewBag.TotalCount = totalCount; // 전체 게시글 개수
+            ViewBag.MaxListCount = maxListCount; // 한페이지에 몇개 보여줄지
+            ViewBag.TotalPageCount = totalPageCount; // 전체 페이지 수
+
+         /*   if(Request.QueryString["page"] != null)
+            {
+                pageNum = Convert.ToInt32(Request.QueryString["page"]);
+            }
+         */
+
+
+
+            //return View(BoardModel.GetList(search));
+            return View(answer);
+
         }
+
         [Authorize]
         public IActionResult BoardWrite()
         {

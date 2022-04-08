@@ -42,6 +42,7 @@ namespace KyowonToy.lib.DataBase
 
         }
 
+  
         public T QuerySingle<T>(string sql, object param)
         {
             return Dapper.SqlMapper.QuerySingleOrDefault<T>(conn, sql, param, trans);

@@ -1,5 +1,10 @@
 ﻿@model List<BoardModel>
 @{
+    int pageNum = ViewBag.Page ?? 1;  // 없으면 1
+    int totalCount = ViewBag.TotalCount ?? 0;   // 없으면 0
+    int maxListCount = ViewBag.MaxListCount ?? 1;
+    int totalPageCount = ViewBag.TotalPageCount ?? 1;
+
 
 }
 
@@ -45,6 +50,30 @@ th {
                             }
                         </tbody>
                     </table>
+
+                    <!-- 페이징 버튼 부분 -->
+                    <div class = "text-center">
+                        <div class ="btn-group">
+                            @if (totalPageCount < 11)
+                            {
+                                @for (int i = 1; i <= totalPageCount; i++)
+                                {
+                                    <a href ="?page=@i" class = "btn btn-@(pageNum == i? "primary" : "default")">@i</a>
+
+                                }
+                            } else
+                            {
+                                    <a>&lt이전</a>
+                                 @for (int i = 1; i <= 10; i++)
+                                {
+                                    <a href ="?page=@i" class = "btn btn-@(pageNum == i? "primary" : "default")">@i</a>
+                                }
+                                    <a>다음&gt;</a>
+                            }
+                        </div>
+                    </div>
+
+
                     @if(Model.Count() == 0)
                     {
                         <div class="alert alert-info">
