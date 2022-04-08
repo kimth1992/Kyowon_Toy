@@ -5,13 +5,17 @@
     int maxListCount = ViewBag.MaxListCount ?? 1;
     int totalPageCount = ViewBag.TotalPageCount ?? 1;
 
+    if (pageNum > totalPageCount)
+    {
+        totalPageCount = pageNum;
+    }
 
 }
 
 <style>
-th {
-  text-align: center;
-}
+    th {
+        text-align: center;
+    }
 </style>
 
 <div class="row">
@@ -21,11 +25,11 @@ th {
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered no-wrap">
                         <colgroup>
-                            <col style = "width:100px" />
-                            <col style = "width:auto" />
-                            <col style = "width:100px" />
-                            <col style = "width:100px" />
-                            <col style = "width:20px" />
+                            <col style="width:100px" />
+                            <col style="width:auto" />
+                            <col style="width:100px" />
+                            <col style="width:100px" />
+                            <col style="width:20px" />
                         </colgroup>
                         <thead>
                             <tr>
@@ -42,7 +46,7 @@ th {
                             {
                                 <tr>
                                     <td text-align: center>@item.Idx</td>
-                                    <td><a href = "/board/boardView?idx=@item.Idx">@item.Title</a></td>
+                                    <td><a href="/board/boardView?idx=@item.Idx">@item.Title</a></td>
                                     <td>@item.UserName</td>
                                     <td>@item.registeredDate</td>
                                     <td><center>@item.View_Cnt</center></td>
@@ -52,35 +56,72 @@ th {
                     </table>
 
                     <!-- 페이징 버튼 부분 -->
-                    <div class = "text-center">
-                        <div class ="btn-group">
-                            @if (totalPageCount < 11)
+                    <div class="text-center">
+                        <div class="btn-group">
+                            @if (totalPageCount <= 10)
                             {
                                 @for (int i = 1; i <= totalPageCount; i++)
                                 {
-                                    <a href ="?page=@i" class = "btn btn-@(pageNum == i? "primary" : "default")">@i</a>
+                                    <a href="?page=@i" class="btn btn-@(pageNum == i? "primary" : "default")">@i</a>
 
                                 }
-                            } else
+                            }
+
+                            else // 전체 페이지수가 10개가 넘을때, 이전과 다음 넣어야 함
                             {
-                                    <a>&lt이전</a>
-                                 @for (int i = 1; i <= 10; i++)
+                                if (pageNum > 10 && pageNum % 10 != 0)
                                 {
-                                    <a href ="?page=@i" class = "btn btn-@(pageNum == i? "primary" : "default")">@i</a>
+                                    <a href="?page=@(pageNum-pageNum%10)">&lt이전</a>
                                 }
-                                    <a>다음&gt;</a>
+                                if (pageNum > 10 && pageNum % 10 == 0)
+                                {
+                                    <a href="?page=@(pageNum-10)">&lt이전</a>
+                                }
+
+                                if (totalPageCount > pageNum)
+                                {
+                                    for (int i = 1; i <= 10; i++)
+                                    {
+                                        if (pageNum % 10 != 0)
+                                        {
+                                            <a href="?page=@(i+pageNum/10*10)" class="btn btn-@(pageNum == i? "primary" : "default")">@(i+pageNum/10*10)</a>
+                                        }
+                                        if (pageNum % 10 == 0)
+                                        {
+                                            <a href="?page=@i" class="btn btn-@(pageNum == i? "primary" : "default")">@i</a>
+                                        }
+                                    }
+                                    <a href="?page=@(pageNum+10-(pageNum-1))">다음&gt;</a>
+                                }
+
+                                // 굉장히 잘못되었음
+                                if (totalPageCount <= pageNum)
+                                {
+                                     for (int i = 1; i <= pageNum%10; i++)
+                                    {
+                                        if (pageNum % 10 != 0)
+                                        {
+                                            <a href="?page=@(i+pageNum/10*10)" class="btn btn-@(pageNum == i? "primary" : "default")">@(i+pageNum/10*10)</a>
+                                        }
+                                        if (pageNum % 10 == 0)
+                                        {
+                                            <a href="?page=@i" class="btn btn-@(pageNum == i? "primary" : "default")">@i</a>
+                                        }
+                                    }
+                                }
+
                             }
                         </div>
                     </div>
 
 
-                    @if(Model.Count() == 0)
+                    @if (Model.Count() == 0)
                     {
                         <div class="alert alert-info">
                             데이터가 없습니다.
-                            </div>
+                        </div>
                     }
-                    </div>
+                </div>
                 <div class="text-right">
                     <a href="/board/boardwrite" class="btn btn-sm btn-primary">글쓰기</a>
                 </div>
