@@ -1,13 +1,15 @@
 ﻿@model List<BoardModel>
 @{
-    int pageNum = ViewBag.Page ?? 1;  // 없으면 1
+    int page = ViewBag.Page ?? 1;  // 없으면 1
     int totalCount = ViewBag.TotalCount ?? 0;   // 없으면 0
     int maxListCount = ViewBag.MaxListCount ?? 1;
     int totalPageCount = ViewBag.TotalPageCount ?? 1;
+    int startPage = ViewBag.StartPage;
+    int endPage = ViewBag.EndPage;
 
-    if (pageNum > totalPageCount)
+    if (page > totalPageCount)
     {
-        totalPageCount = pageNum;
+        totalPageCount = page;
     }
 
 }
@@ -17,6 +19,20 @@
         text-align: center;
     }
 </style>
+
+
+<div>
+    <a class="nav-link float-right" href="javascript:void(0)">
+    <form>
+        <div class="customize-input">
+            <input class="form-control custom-shadow custom-radius border-0 bg-white"
+                   type="search" placeholder="Search" aria-label="Search">
+            <i class="form-control-icon" data-feather="search"></i>
+        </div>
+    </form>
+</a>
+</div>
+
 
 <div class="row">
     <div class="col-12">
@@ -58,59 +74,44 @@
                     <!-- 페이징 버튼 부분 -->
                     <div class="text-center">
                         <div class="btn-group">
-                            @if (totalPageCount <= 10)
-                            {
-                                @for (int i = 1; i <= totalPageCount; i++)
+                            <div>
+                                @if (startPage > 1)
                                 {
-                                    <a href="?page=@i" class="btn btn-@(pageNum == i? "primary" : "default")">@i</a>
-
+                                    <button type="button" class="btn btn-link">
+                                        <a href="?page=1">&lt;&lt;</a>
+                                    </button>
+                                    <button type="button" class="btn btn-link">
+                                        <a href="?page=@(startPage-1)">&lt;</a>
+                                    </button>
                                 }
-                            }
-
-                            else // 전체 페이지수가 10개가 넘을때, 이전과 다음 넣어야 함
-                            {
-                                if (pageNum > 10 && pageNum % 10 != 0)
+                                @if (page != 1)
                                 {
-                                    <a href="?page=@(pageNum-pageNum%10)">&lt이전</a>
-                                }
-                                if (pageNum > 10 && pageNum % 10 == 0)
-                                {
-                                    <a href="?page=@(pageNum-10)">&lt이전</a>
+                                    <button type="button" class="btn btn-link">
+                                        <a href="?page=@(page-1)">이전&nbsp;</a>
+                                    </button>
                                 }
 
-                                if (totalPageCount > pageNum)
+                                @for (int i = startPage; i <= endPage; i++)
                                 {
-                                    for (int i = 1; i <= 10; i++)
-                                    {
-                                        if (pageNum % 10 != 0)
-                                        {
-                                            <a href="?page=@(i+pageNum/10*10)" class="btn btn-@(pageNum == i? "primary" : "default")">@(i+pageNum/10*10)</a>
-                                        }
-                                        if (pageNum % 10 == 0)
-                                        {
-                                            <a href="?page=@i" class="btn btn-@(pageNum == i? "primary" : "default")">@i</a>
-                                        }
-                                    }
-                                    <a href="?page=@(pageNum+10-(pageNum-1))">다음&gt;</a>
-                                }
+                                    <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
 
-                                // 굉장히 잘못되었음
-                                if (totalPageCount <= pageNum)
+                                }
+                                @if (page != totalPageCount)
                                 {
-                                     for (int i = 1; i <= pageNum%10; i++)
-                                    {
-                                        if (pageNum % 10 != 0)
-                                        {
-                                            <a href="?page=@(i+pageNum/10*10)" class="btn btn-@(pageNum == i? "primary" : "default")">@(i+pageNum/10*10)</a>
-                                        }
-                                        if (pageNum % 10 == 0)
-                                        {
-                                            <a href="?page=@i" class="btn btn-@(pageNum == i? "primary" : "default")">@i</a>
-                                        }
-                                    }
+                                    <button type="button" class="btn btn-link">
+                                        <a href="?page=@(page+1)">다음</a>
+                                    </button>
                                 }
-
-                            }
+                                @if (page < totalPageCount)
+                                {
+                                    <button type="button" class="btn btn-link">
+                                        <a href="?page=@(endPage+1)">&gt;</a>
+                                    </button>
+                                    <button type="button" class="btn btn-link">
+                                        <a href="?page=@totalPageCount">&gt;&gt;</a>
+                                    </button>
+                                }
+                            </div>
                         </div>
                     </div>
 
@@ -129,3 +130,63 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<!--   @if (totalPageCount <= 10)
+{
+    @for (int i = 1; i <= totalPageCount; i++)
+    {
+                                                           <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
+
+    }
+}
+
+else // 전체 페이지수가 10개가 넘을때, 이전과 다음 넣어야 함
+{
+    if (page > 10 && page % 10 != 0)
+    {
+                                                           <a href="?page=@(page-page%10)">&lt이전</a>
+    }
+    if (page > 10 && page % 10 == 0)
+    {
+                                                           <a href="?page=@(page-10)">&lt이전</a>
+    }
+
+    if (totalPageCount > page)
+    {
+        for (int i = 1; i <= 10; i++)
+        {
+            if (page % 10 != 0)
+            {
+                                                                                           <a href="?page=@(i+page/10*10)" class="btn btn-@(page == i? "primary" : "default")">@(i+page/10*10)</a>
+            }
+            if (page % 10 == 0)
+            {
+                                                                                           <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
+            }
+        }
+                                                           <a href="?page=@(page+10-(page-1))">다음&gt;</a>
+    }
+
+    // 굉장히 잘못되었음
+    if (totalPageCount <= page)
+    {
+        for (int i = 1; i <= page % 10; i++)
+        {
+            if (page % 10 != 0)
+            {
+                                                                                           <a href="?page=@(i+page/10*10)" class="btn btn-@(page == i? "primary" : "default")">@(i+page/10*10)</a>
+            }
+            if (page % 10 == 0)
+            {
+                                                                                           <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
+            }
+        }
+    }
+
+}
+              -->

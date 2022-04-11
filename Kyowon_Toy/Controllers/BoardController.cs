@@ -24,7 +24,8 @@ namespace Kyowon_Toy.Controllers
         public IActionResult BoardList(string search, int page)
         {
 
-            int maxListCount = 10;
+            int maxListCount = 5; // 한페이지에 몇개 보여줄지
+            int countPage = 10; // 페이지 몇개 보여줄지(1~10)
             List<BoardModel> boards = BoardModel.BoardAll();
             //var boards = BoardModel.BoardAll();
 
@@ -36,6 +37,20 @@ namespace Kyowon_Toy.Controllers
                 totalPageCount++;
             }
 
+            if(totalPageCount < page)
+            {
+                page = totalPageCount;
+            }
+
+            int startPage = ((page -1) / countPage) * countPage +1;
+            int endPage = startPage + countPage - 1;
+
+            if(endPage > totalPageCount)
+            {
+                endPage = totalPageCount;
+            }
+
+
          var answer = boards.OrderByDescending(x=>x.registeredDate).Skip((page -1) * maxListCount).Take(maxListCount).ToList();
          
 
@@ -43,6 +58,8 @@ namespace Kyowon_Toy.Controllers
             ViewBag.TotalCount = totalCount; // 전체 게시글 개수
             ViewBag.MaxListCount = maxListCount; // 한페이지에 몇개 보여줄지
             ViewBag.TotalPageCount = totalPageCount; // 전체 페이지 수
+            ViewBag.StartPage = startPage;
+            ViewBag.EndPage = endPage;
 
          /*   if(Request.QueryString["page"] != null)
             {
@@ -80,7 +97,11 @@ namespace Kyowon_Toy.Controllers
         }
         public IActionResult BoardView(uint idx)
         {
-            return View(BoardModel.Get(idx));
+            BoardModel board;
+            board = BoardModel.Get(idx);
+            board.UpdateCount(idx);
+            
+            return View(board);
         }
         [Authorize]
         public IActionResult BoardEdit(uint idx, string type)

@@ -56,6 +56,7 @@ idx, title, user, username, registeredDate, view_cnt, status_flag from board";
             }
         }
 
+        
 
 
         public static BoardModel Get(uint idx)
@@ -115,6 +116,15 @@ now(), 0, 0)";
             CheckContents();
             string sql = @"
 Update board set title = @title, contents = @contents where idx = @idx";
+            using (var db = new MysqlDapperHelper())
+            {
+                return db.Execute(sql, this);
+            }
+        }
+
+        public int UpdateCount(uint idx)
+        {
+            string sql = @"update board set view_cnt = view_cnt + 1 where idx = @idx";
             using (var db = new MysqlDapperHelper())
             {
                 return db.Execute(sql, this);
