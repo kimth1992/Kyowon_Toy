@@ -69,6 +69,27 @@ select idx, title, contents, user, username, registeredDate, view_cnt from board
             }
         }
 
+        public static BoardModel Next(uint idx)
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select * from board where idx = (select min(idx) from board where idx > @idx)";
+                return db.QuerySingle<BoardModel>(sql, new { idx = idx });
+            }
+        }
+
+        public static BoardModel Previous(uint idx)
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select * from board where idx = (select max(idx) from board where idx < @idx)";
+                return db.QuerySingle<BoardModel>(sql, new { idx = idx });
+            }
+        }
+
+
         void CheckContents()
         {
             if (string.IsNullOrWhiteSpace(this.Title))

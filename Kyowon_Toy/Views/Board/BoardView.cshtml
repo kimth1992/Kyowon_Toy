@@ -1,5 +1,11 @@
 ﻿@using System.Security.Claims
 @model BoardModel
+@{
+    var next = ViewBag.NextBoard;
+    var pre = ViewBag.preBoard;
+
+}
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -12,16 +18,38 @@
                         </colgroup>
                         <tbody>
                             <tr>
+                                <th>게시자 -> 조회수</th>
+                                <td>@Model.View_Cnt</td>
+                                <th>게시일</th>
+                                <td>@Model.registeredDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
+                                <th>게시 종료일</th>
+                                <td>영구 게시</td>
+                            </tr>
+                            <tr>
+                                <th>부  서</th>
+                                <td>어딘가의 부서</td>
+                                <th>직책</th>
+                                <td>뭔가의 직책</td>
+                                <th>전화번호</th>
+                                <td colspan="3">전화번호 가져오기</td>
+                            </tr>
+                            <tr>
                                 <th>제목</th>
                                 <td>@Model.Title</td>
                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <table class="table table-bordered no-wrap">
+                        <colgroup>
+                            <col style="width:100px" />
+                            <col style="width:auto" />
+                        </colgroup>
+                        <tbody>
                             <tr>
-                                <th>내용</th>
                                 <td>@Html.Raw(@Model.Contents)</td>
-                            </tr>
-                            <tr>
-                                <th>작성자</th>
-                                <td>@Model.UserName (@Model.registeredDate.ToString("yyyy-MM-dd"))</td>
                             </tr>
                         </tbody>
                     </table>
@@ -40,6 +68,54 @@
                         </form>
                     }
                 </div>
+
+
+
+                <div>
+                    <table class="table table-bordered no-wrap">
+                        <colgroup>
+                            <col style="width:100px" />
+                            <col style="width:auto" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>다음글</th>
+                                <td>
+                                    @if(@next.Idx != 0)
+                                    {
+                                    <a href="/board/boardview?idx=@(next.Idx)">
+                                        @next.Title
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                         @next.Title
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>이전글</th>
+                                <td>
+                                      @if(@pre.Idx != 0)
+                                    {
+                                    <a href="/board/boardview?idx=@(pre.Idx)">
+                                        @pre.Title
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                         @pre.Title
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+
+
             </div>
         </div>
     </div>

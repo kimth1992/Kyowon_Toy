@@ -100,7 +100,31 @@ namespace Kyowon_Toy.Controllers
             BoardModel board;
             board = BoardModel.Get(idx);
             board.UpdateCount(idx);
-            
+
+
+            BoardModel nextBoard;
+            nextBoard = BoardModel.Next(idx);
+
+            if(nextBoard == null)
+            {
+                nextBoard = new BoardModel();
+                nextBoard.Title = "마지막 게시글 입니다.";
+            }
+
+            BoardModel preBoard;
+            preBoard = BoardModel.Previous(idx);
+
+            if (preBoard == null)
+            {
+                preBoard = new BoardModel();
+                preBoard.Title = "첫 게시글 입니다.";
+            }
+
+            ViewBag.NextBoard = nextBoard;
+            ViewBag.preBoard = preBoard;
+
+
+
             return View(board);
         }
         [Authorize]
