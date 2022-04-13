@@ -87,18 +87,26 @@ namespace Kyowon_Toy.Controllers
         {
             var model = new BoardModel();
 
-            model.Title = title;
-            model.Contents = contents;
-            model.User = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            model.UserName = User.Identity.Name;
+            model.title = title;
+            model.contents = contents;
+            model.user = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            model.userName = User.Identity.Name;
             model.Insert();
 
             return Redirect("/board/boardlist");
         }
+     
         public IActionResult BoardView(uint idx)
         {
             BoardModel board;
             board = BoardModel.Get(idx);
+
+            if(board == null)
+            {
+                return Redirect("/board/boardNull");
+            }
+
+
             board.UpdateCount(idx);
 
 
@@ -108,7 +116,7 @@ namespace Kyowon_Toy.Controllers
             if(nextBoard == null)
             {
                 nextBoard = new BoardModel();
-                nextBoard.Title = "마지막 게시글 입니다.";
+                nextBoard.title = "마지막 게시글 입니다.";
             }
 
             BoardModel preBoard;
@@ -117,7 +125,7 @@ namespace Kyowon_Toy.Controllers
             if (preBoard == null)
             {
                 preBoard = new BoardModel();
-                preBoard.Title = "첫 게시글 입니다.";
+                preBoard.title = "첫 게시글 입니다.";
             }
 
             ViewBag.NextBoard = nextBoard;
@@ -127,6 +135,14 @@ namespace Kyowon_Toy.Controllers
 
             return View(board);
         }
+
+        public IActionResult Search(string type ,string keyword)
+        {
+
+            return View();
+        }
+
+
         [Authorize]
         public IActionResult BoardEdit(uint idx, string type)
         {
@@ -134,7 +150,7 @@ namespace Kyowon_Toy.Controllers
 
             var userSeq = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            if (board.User != userSeq)
+            if (board.user != userSeq)
             {
                 throw new Exception("수정 할 수 없습니다.");
             }
@@ -145,7 +161,7 @@ namespace Kyowon_Toy.Controllers
             }
             else if (type == "D")
             {
-                board.Delete();
+                board.Delete(idx);
                 return Redirect("/board/boardlist");
 
             }
@@ -164,13 +180,13 @@ namespace Kyowon_Toy.Controllers
             var userSeq = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 
-            if (model.User != userSeq)
+            if (model.user != userSeq)
             {
                 throw new Exception("수정 할 수 없습니다.");
             }
 
-            model.Title = title;
-            model.Contents = contents;
+            model.title = title;
+            model.contents = contents;
 
             model.Update();
 

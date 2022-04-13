@@ -10,8 +10,8 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <form id="form1" method="post" action="/board/BoardEdit_Input">
-                        <!--@Html.Hidden("idx", Model.Idx)-->
-                       <input type="hidden" name="idx" value="@Model.Idx" /> 
+                        <!--@Html.Hidden("idx", Model.idx)-->
+                       <input type="hidden" name="idx" value="@Model.idx" /> 
                         <table class="table table-bordered no-wrap">
                             <colgroup>
                                 <col style="width:100px" />
@@ -21,23 +21,23 @@
                                 <tr>
                                     <th>제목</th>
                                     <td>
-                                       <!-- @Html.TextBox("title", Model.Title, new {@class = "form-control"}) -->
-                                         <input name="title" type="text" value="@Model.Title" class="form-control" />
+                                       <!-- @Html.TextBox("title", Model.title, new {@class = "form-control"}) -->
+                                         <input name="title" type="text" value="@Model.title" class="form-control" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>내용</th>
                                     <td>
                            
-                                        @Html.TextArea("contents", Model.Contents, new {@class = "form-control", rows = 10})
-                                        <!--  <input name="contents" type="text" value="@Model.Contents" class="form-control" rows="10" />
-                                          <input type="hidden" name="idx" value="@Model.Idx"> -->
+                                        @Html.TextArea("contents", Model.contents, new {@class = "form-control", rows = 10})
+                                        <!--  <input name="contents" type="text" value="@Model.contents" class="form-control" rows="10" />
+                                          <input type="hidden" name="idx" value="@Model.idx"> -->
                                        
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>작성자</th>
-                                    <td>@Model.UserName (@Model.registeredDate.ToString("yyyy-MM-dd"))</td>
+                                    <td>@Model.userName (@Model.registeredDate.ToString("yyyy-MM-dd hh:mm:ss"))</td>
                                 </tr>
 
                             </tbody>

@@ -6,6 +6,13 @@
 
 }
 
+<style>
+.modal-body{
+    text-align : center;
+}
+</style>
+
+
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -19,7 +26,7 @@
                         <tbody>
                             <tr>
                                 <th>게시자 -> 조회수</th>
-                                <td>@Model.View_Cnt</td>
+                                <td>@Model.view_Cnt</td>
                                 <th>게시일</th>
                                 <td>@Model.registeredDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
                                 <th>게시 종료일</th>
@@ -35,7 +42,7 @@
                             </tr>
                             <tr>
                                 <th>제목</th>
-                                <td>@Model.Title</td>
+                                <td>@Model.title</td>
                             </tr>
                         </tbody>
                     </table>
@@ -49,7 +56,7 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <td>@Html.Raw(@Model.Contents)</td>
+                                <td>@Html.Raw(@Model.contents)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -58,16 +65,46 @@
 
 
                 <div class="text-right">
-                    @if (Model.User == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                    @if (Model.user == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                     {
                         <button id="btnU" class="btn btn-sm btn-primary">수정</button>
-                        <button id="btnD" class="btn btn-sm btn-danger">삭제</button>
+                        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">삭제</button>
+
+                        <!-- 삭제시 해당 모달 창 -->
+
+                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" >
+                                        게시물을 삭제하시겠습니까?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id = "btnD" type="button" class="btn btn-primary">삭제하기</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- 여기까지 모달창-->
+
+
+
                         <form id="form1" method="post" action="/board/boardEdit">
-                            <input type="hidden" name="idx" value="@Model.Idx">
+                            <input type="hidden" name="idx" value="@Model.idx">
                             <input type="hidden" name="type" value="">
                         </form>
                     }
                 </div>
+
+
 
 
 
@@ -81,30 +118,30 @@
                             <tr>
                                 <th>다음글</th>
                                 <td>
-                                    @if(@next.Idx != 0)
+                                    @if (@next.idx != 0)
                                     {
-                                    <a href="/board/boardview?idx=@(next.Idx)">
-                                        @next.Title
+                                        <a href="/board/boardview?idx=@(next.idx)">
+                                            @next.title
                                         </a>
                                     }
                                     else
                                     {
-                                         @next.Title
+                                        @next.title
                                     }
                                 </td>
                             </tr>
                             <tr>
                                 <th>이전글</th>
                                 <td>
-                                      @if(@pre.Idx != 0)
+                                    @if (@pre.idx != 0)
                                     {
-                                    <a href="/board/boardview?idx=@(pre.Idx)">
-                                        @pre.Title
+                                        <a href="/board/boardview?idx=@(pre.idx)">
+                                            @pre.title
                                         </a>
                                     }
                                     else
                                     {
-                                         @pre.Title
+                                        @pre.title
                                     }
                                 </td>
                             </tr>
@@ -114,21 +151,22 @@
 
                 </div>
 
-
-
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    $("#btnU").click(function() {
-        $("#form1 input[name=type]").val("U");
-        $("#form1").submit();
-    });
+     $("#btnU").click(function() {
+         $("#form1 input[name=type]").val("U");
+         $("#form1").submit();
+     });
 
-      $("#btnD").click(function() {
-        $("#form1 input[name=type]").val("D");
-        $("#form1").submit();
-    });
+       $("#btnD").click(function() {
+         $("#form1 input[name=type]").val("D");
+         $("#form1").submit();
+     });
+           
 </script>
+
+

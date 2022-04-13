@@ -18,20 +18,38 @@
     th {
         text-align: center;
     }
+
+    container {
+        padding:50px 20px;
+    }
 </style>
 
+<!--  검색기능 영역  -->
 
-<div>
-    <a class="nav-link float-right" href="javascript:void(0)">
-    <form>
-        <div class="customize-input">
-            <input class="form-control custom-shadow custom-radius border-0 bg-white"
-                   type="search" placeholder="Search" aria-label="Search">
-            <i class="form-control-icon" data-feather="search"></i>
-        </div>
-    </form>
-</a>
-</div>
+
+
+<div class="container" >
+		<div class="row">
+			<form method="post" name="search" action="/board/search">
+				<table class="pull-right" >
+					<tr>
+						<td><select class="form-control" name="searchField">
+								<option value="제목">제목</option>
+								<option value="게시자">게시자</option>
+								<option value="부서">부서</option>
+						</select></td>
+						<td><input type="search" class="form-control"
+							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
+						<td><button type="submit" class="btn btn-success">검색</button></td>
+					</tr>
+
+				</table>
+			</form>
+		</div>
+	</div>
+
+           
+<!--  검색기능 영역 여기까지  -->
 
 
 <div class="row">
@@ -61,11 +79,11 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td text-align: center>@item.Idx</td>
-                                    <td><a href="/board/boardView?idx=@item.Idx">@item.Title</a></td>
-                                    <td>@item.UserName</td>
+                                    <td text-align: center>@item.idx</td>
+                                    <td><a href="/board/boardView?idx=@item.idx">@item.title</a></td>
+                                    <td>@item.userName</td>
                                     <td>@item.registeredDate</td>
-                                    <td><center>@item.View_Cnt</center></td>
+                                    <td><center>@item.view_Cnt</center></td>
                                 </tr>
                             }
                         </tbody>
@@ -134,59 +152,3 @@
 
 
 
-
-
-<!--   @if (totalPageCount <= 10)
-{
-    @for (int i = 1; i <= totalPageCount; i++)
-    {
-                                                           <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
-
-    }
-}
-
-else // 전체 페이지수가 10개가 넘을때, 이전과 다음 넣어야 함
-{
-    if (page > 10 && page % 10 != 0)
-    {
-                                                           <a href="?page=@(page-page%10)">&lt이전</a>
-    }
-    if (page > 10 && page % 10 == 0)
-    {
-                                                           <a href="?page=@(page-10)">&lt이전</a>
-    }
-
-    if (totalPageCount > page)
-    {
-        for (int i = 1; i <= 10; i++)
-        {
-            if (page % 10 != 0)
-            {
-                                                                                           <a href="?page=@(i+page/10*10)" class="btn btn-@(page == i? "primary" : "default")">@(i+page/10*10)</a>
-            }
-            if (page % 10 == 0)
-            {
-                                                                                           <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
-            }
-        }
-                                                           <a href="?page=@(page+10-(page-1))">다음&gt;</a>
-    }
-
-    // 굉장히 잘못되었음
-    if (totalPageCount <= page)
-    {
-        for (int i = 1; i <= page % 10; i++)
-        {
-            if (page % 10 != 0)
-            {
-                                                                                           <a href="?page=@(i+page/10*10)" class="btn btn-@(page == i? "primary" : "default")">@(i+page/10*10)</a>
-            }
-            if (page % 10 == 0)
-            {
-                                                                                           <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
-            }
-        }
-    }
-
-}
-              -->
