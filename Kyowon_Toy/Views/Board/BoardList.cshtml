@@ -20,39 +20,44 @@
     }
 
     container {
-        padding:50px 20px;
+        padding: 50px 20px;
     }
 </style>
 
+
+
 <!--  검색기능 영역  -->
-
-
-
-<div class="container" >
-		<div class="row">
-			<form method="post" name="search" action="/board/search">
-				<table class="pull-right" >
-					<tr>
-						<td><select class="form-control" name="searchField">
-								<option value="제목">제목</option>
-								<option value="게시자">게시자</option>
-								<option value="부서">부서</option>
-						</select></td>
-						<td><input type="search" class="form-control"
-							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
-						<td><button type="submit" class="btn btn-success">검색</button></td>
-					</tr>
-
-				</table>
-			</form>
-		</div>
-	</div>
-
-           
-<!--  검색기능 영역 여기까지  -->
-
-
 <div class="row">
+
+
+    <form method="post" name="search" action="/board/boardlist">
+        <div style="float:right;">
+            <table align="right">
+                <tr>
+                    <td>
+                        <select class="form-control" name="key">
+                            <option value="title">제목</option>
+                            <option value="username">게시자</option>
+                            <option value="department">부서</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="search" class="form-control"
+                               placeholder="검색어 입력" name="keyword" maxlength="100">
+                    </td>
+                    <td><button type="submit" class="btn btn-success">검색</button></td>
+                </tr>
+
+            </table>
+        </div>
+    </form>
+
+
+
+    <!--  검색기능 영역 여기까지  -->
+    <!-- 본문(테이블) 시작-->
+
+
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -70,7 +75,7 @@
                                 <th>번호</th>
                                 <th><center>제목</center></th>
                                 <th><center>등록자</center></th>
-                                <th>등록일시</th>
+                                <th>게시일</th>
                                 <th><center>조회수</center></th>
                             </tr>
                         </thead>
@@ -80,8 +85,17 @@
                             {
                                 <tr>
                                     <td text-align: center>@item.idx</td>
-                                    <td><a href="/board/boardView?idx=@item.idx">@item.title</a></td>
-                                    <td>@item.userName</td>
+                                    <td>
+                                        <a href="/board/boardView?idx=@item.idx">
+                                            @item.title
+                                            @if (item.commentList.Count() != 0)
+                                            {
+                                                item.commentList.Count();
+                                            }
+                                        </a>
+                                    </td>
+                                    <!-- target="_blank"  새로운 페이지 띄우며 이동-->
+                                <td>@item.userName</td>
                                     <td>@item.registeredDate</td>
                                     <td><center>@item.view_Cnt</center></td>
                                 </tr>
@@ -89,6 +103,7 @@
                         </tbody>
                     </table>
 
+                    <!-- 본문 종료-->
                     <!-- 페이징 버튼 부분 -->
                     <div class="text-center">
                         <div class="btn-group">
@@ -102,7 +117,7 @@
                                         <a href="?page=@(startPage-1)">&lt;</a>
                                     </button>
                                 }
-                                @if (page != 1)
+                                @if (page != 1 && Model.Count != 0)
                                 {
                                     <button type="button" class="btn btn-link">
                                         <a href="?page=@(page-1)">이전&nbsp;</a>
@@ -131,19 +146,20 @@
                                 }
                             </div>
                         </div>
+                        <div class="text-right">
+                            <a href="/board/boardwrite" class="btn btn-sm btn-primary">글쓰기</a>
+                        </div>
                     </div>
 
 
                     @if (Model.Count() == 0)
                     {
-                        <div class="alert alert-info">
-                            데이터가 없습니다.
+                        <div class="alert">
+                            게시물이 없습니다.
                         </div>
                     }
                 </div>
-                <div class="text-right">
-                    <a href="/board/boardwrite" class="btn btn-sm btn-primary">글쓰기</a>
-                </div>
+
             </div>
         </div>
     </div>

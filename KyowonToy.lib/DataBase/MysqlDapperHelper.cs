@@ -15,6 +15,7 @@ namespace KyowonToy.lib.DataBase
         public MysqlDapperHelper()
         {
             conn = new MySqlConnection("Server = 127.0.0.1; Port = 3306; Database = kyowontoy; Uid = root; Pwd = root;");
+            // Allow User Variables=true;
         }
 
         public void BeguinTransaction()
@@ -44,6 +45,11 @@ namespace KyowonToy.lib.DataBase
 
   
         public T QuerySingle<T>(string sql, object param)
+        {
+            return Dapper.SqlMapper.QuerySingleOrDefault<T>(conn, sql, param, trans);
+        }
+
+        public T QuerySingle<T>(string sql, object param, object param2)
         {
             return Dapper.SqlMapper.QuerySingleOrDefault<T>(conn, sql, param, trans);
         }

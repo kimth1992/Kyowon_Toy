@@ -1,15 +1,24 @@
 ﻿@using System.Security.Claims
 @model BoardModel
+
+
 @{
     var next = ViewBag.NextBoard;
     var pre = ViewBag.preBoard;
+    List<CommentModel> comments = ViewBag.comments;
+    List<LikeModel> likeList = ViewBag.likeList;
+    var likeChech = ViewBag.likeCheck;
+    var likeOrNot = ViewBag.likeOrNot;
 
 }
+
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
 <style>
-.modal-body{
-    text-align : center;
-}
+    .modal-body {
+        text-align: center;
+    }
 </style>
 
 
@@ -38,11 +47,11 @@
                                 <th>직책</th>
                                 <td>뭔가의 직책</td>
                                 <th>전화번호</th>
-                                <td colspan="3">전화번호 가져오기</td>
+                                <td>전화번호 가져오기</td>
                             </tr>
                             <tr>
                                 <th>제목</th>
-                                <td>@Model.title</td>
+                                <td colspan="5">@Model.title</td>
                             </tr>
                         </tbody>
                     </table>
@@ -81,11 +90,11 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body" >
+                                    <div class="modal-body">
                                         게시물을 삭제하시겠습니까?
                                     </div>
                                     <div class="modal-footer">
-                                        <button id = "btnD" type="button" class="btn btn-primary">삭제하기</button>
+                                        <button id="btnD" type="button" class="btn btn-primary">삭제하기</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
                                     </div>
                                 </div>
@@ -107,6 +116,148 @@
 
 
 
+                       <!-- likeContainer -->
+             <!--   <div class="container" id="likeContainer">-->
+                <div id="likeContainer">
+                    <form id="likeAddCancel" action="/like/likeupdate">
+                        <input type="hidden" name="idx" value="@Model.idx">
+                        <button id="heartBtn" style="border: 0; background-color: white; outline:0;" type="submit" value=@likeOrNot>
+                            <i class="bi bi-heart" id="heartIcon" style="color: red" data-like=@likeOrNot></i>
+                            &nbsp;좋아요&nbsp;@likeList.Count &nbsp;&nbsp;
+                        </button><i class="bi bi-chat-square-dots"></i>&nbsp;댓글&nbsp;@comments.Count
+                    </form>
+                    <hr size="5px" color="black"> <!-- hr 템플릿 설정되어있음 black > opacity -->
+                </div>
+                <!-- .likeContainer -->
+                <!-- 댓글 생성 Div-->
+
+
+          
+
+
+
+
+
+                <!-- 댓글 조회 Div-->
+
+                <div>
+
+
+                    <form action="/comment/commentdelete">
+
+                        @for (int i = 0; i < comments.Count; i++)
+                        {
+                            <input id="idx" name="idx" type="hidden" value="@Model.idx">
+                            <pre>@(i+1 ). @comments[i].name  (@comments[i].registeredDate) : @comments[i].content  @if (@comments[i].member_seq == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                {<button type="submit" class="btn btn-sm" id="commentIdx" name="commentIdx" value="@comments[i].idx">                         X</button>}</pre>
+                        }
+
+                    </form>
+
+
+                </div>
+
+
+
+             
+
+
+
+                <form action="/comment/commentadd">
+                    <table class="table table-bordered no-wrap">
+                        <colgroup>
+                            <col style="width:100px" />
+                            <col style="width:auto" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>한줄 답변</th>
+                                <td>
+
+                                    <div class="form-group col-sm-9">
+                                        <input id="idx" name="idx" type="hidden" value="@Model.idx">
+
+                                        <input class="form-group input-sm col-sm-6" id="replytext" name="content" type="text" placeholder="한줄 답변">
+                                        <input type="submit" class="btn btn-primary btn-sm" value="등록">
+                                    </div>
+
+
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </form>
+
+                
+      
+                <!--
+
+                      <div class="col-lg-12">
+                 <form action= "../comment/add">
+                  <input type ="hidden" name ="board_no"  value ="${board.no}">
+                  <div class="card">
+                      <div class="row">
+                              <div class="form-group col-sm-10">
+                                <input class="form-control input-sm" id="newReplyText" style = "float:left;" name = "content" type="text" placeholder="한줄 답변">
+                              </div>
+                            <div class="form-group col-sm-2" style = "width:230px; ">
+                              <input id = "f-content" style = "margin-top:3px; float:right;" type = "submit" class="btn btn-primary btn-sm"  value = "등록" onclick = "return checkValue()">
+                            </div>
+                      </div>
+
+                      여기까지가 댓글 다는 기능
+                    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+
+                     <div class="card-footer">
+                     <ul id="replies">
+
+                         <c:forEach items ="${commentList}" var= "comment">
+
+
+                      <p style="float:left;"> 작성자 : ${comment.commenter.nickname}&nbsp;&nbsp;&nbsp;</p>
+
+                      <div class="dropdown" style="float:left;">
+                        <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" style="dropdown-border-color: rgba($black, .15);">
+                          더보기
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                          <li><button name="btn-modal" class="dropdown-item" type="button"
+                          data-nickname="${comment.commenter.nickname}" onclick = "return checkValue()">쪽지 보내기</button></li>
+                        </ul>
+                      </div>
+                      <br>
+                   <p></p>
+                   <p style="xwidth: 230.7px;"> 내용 : ${comment.content} </p>
+                   <p> 댓글 작성 날짜 : ${comment.registeredDate}</p>
+
+                   <div id = "UDbutton" style ="margin-left : 0px">
+                   <c:if test = "${loginUser.nickname == comment.commenter.nickname }">
+
+                  <button class="btn btn-xs btn-success" name="updateButton" onclick="updateComment('${comment.no}')" type="button">댓글 수정</button>
+                  <a href= '../comment/delete?no=${comment.no}&board_no=${board.no}' class="btn btn-primary right" >댓글 삭제</a>
+
+                   </c:if>
+                  </div>
+                <hr>
+                     </c:forEach>
+
+                     </ul>
+                     </div>
+
+
+
+
+                    </div>
+
+                    </form>
+                     </div>
+
+                          -->
+                <!--  다음글, 이전글 Div  -->
 
                 <div>
                     <table class="table table-bordered no-wrap">
@@ -157,16 +308,37 @@
 </div>
 
 <script>
-     $("#btnU").click(function() {
-         $("#form1 input[name=type]").val("U");
-         $("#form1").submit();
-     });
 
-       $("#btnD").click(function() {
-         $("#form1 input[name=type]").val("D");
-         $("#form1").submit();
-     });
-           
+  <!-- 좋아요 하트 변경 -->
+document.querySelectorAll("#heartBtn").forEach((tag) => {
+if (tag.getAttribute("value") == 1) {
+  $("#heartIcon").attr('class', 'bi bi-heart-fill');
+} else {
+   $("#heartIcon").attr('class', 'bi bi-heart');
+     }
+});
+
+
+
+    $("#btnU").click(function() {
+        $("#form1 input[name=type]").val("U");
+        $("#form1").submit();
+    });
+
+      $("#btnD").click(function() {
+        $("#form1 input[name=type]").val("D");
+        $("#form1").submit();
+    });
+
+
+    function SubmitForm(commentIdx, idx, btn) {
+        var commentIdx = $("commentIdx").val();
+        var Idx = $("Idx").val();
+        var form = $(btn).closest("form");
+        form.submit();
+
+    }
+
 </script>
 
 

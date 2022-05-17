@@ -46,6 +46,7 @@ namespace Kyowon_Toy.Controllers
                 // 로그인 작업
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                // identity.AddClaim(new Claim(ClaimTypes.LoginUser, member));
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, member.member_seq.ToString()));
                identity.AddClaim(new Claim(ClaimTypes.Name, member.name));
                //identity.AddClaim(new Claim(ClaimTypes.Email, member.Email));

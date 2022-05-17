@@ -10,24 +10,56 @@ using System.Threading.Tasks;
 using Kyowon_Toy.Models;
 
 
+
 namespace Kyowon_Toy.Controllers
 {
     public class BoardController : Controller
     {
         public IActionResult Index()
         {
-        
+
             return View();
         }
 
+       
 
-        public IActionResult BoardList(string search, int page)
+        public IActionResult BoardList(int page, string key, string keyword)
         {
 
-            int maxListCount = 5; // 한페이지에 몇개 보여줄지
+            int maxListCount = 10; // 한페이지에 몇개 보여줄지
             int countPage = 10; // 페이지 몇개 보여줄지(1~10)
-            List<BoardModel> boards = BoardModel.BoardAll();
+            List<BoardModel> boards;
+
+            if (keyword != null)
+            {
+                if (key == "title")
+                {
+                    boards = BoardModel.SearchTitle(keyword);
+                    page = 1;
+
+                }
+                else if (key == "username")
+                {
+                    boards = BoardModel.SearchUsername(keyword);
+                    page = 1;
+                }
+                else if (key == "department")
+                {
+                    boards = BoardModel.SearchDepartment(keyword);
+                    page = 1;
+                }
+                else
+                {
+                    boards = null;
+                }
+            }
+            else
+            {
+                boards = BoardModel.BoardAll();
+            }
+
             //var boards = BoardModel.BoardAll();
+       
 
             int totalCount = boards.Count();
 
@@ -37,22 +69,22 @@ namespace Kyowon_Toy.Controllers
                 totalPageCount++;
             }
 
-            if(totalPageCount < page)
+            if (totalPageCount < page)
             {
                 page = totalPageCount;
             }
 
-            int startPage = ((page -1) / countPage) * countPage +1;
+            int startPage = ((page - 1) / countPage) * countPage + 1;
             int endPage = startPage + countPage - 1;
 
-            if(endPage > totalPageCount)
+            if (endPage > totalPageCount)
             {
                 endPage = totalPageCount;
             }
 
 
-         var answer = boards.OrderByDescending(x=>x.registeredDate).Skip((page -1) * maxListCount).Take(maxListCount).ToList();
-         
+            var answer = boards.OrderByDescending(x => x.registeredDate).Skip((page - 1) * maxListCount).Take(maxListCount).ToList();
+
 
             ViewBag.Page = page;
             ViewBag.TotalCount = totalCount; // 전체 게시글 개수
@@ -61,18 +93,11 @@ namespace Kyowon_Toy.Controllers
             ViewBag.StartPage = startPage;
             ViewBag.EndPage = endPage;
 
-         /*   if(Request.QueryString["page"] != null)
-            {
-                pageNum = Convert.ToInt32(Request.QueryString["page"]);
-            }
-         */
-
-
-
             //return View(BoardModel.GetList(search));
             return View(answer);
 
         }
+
 
         [Authorize]
         public IActionResult BoardWrite()
@@ -89,19 +114,41 @@ namespace Kyowon_Toy.Controllers
 
             model.title = title;
             model.contents = contents;
-            model.user = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            model.user = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             model.userName = User.Identity.Name;
             model.Insert();
 
             return Redirect("/board/boardlist");
         }
-     
-        public IActionResult BoardView(uint idx)
+
+        [Authorize]
+        public IActionResult BoardView(int idx)
         {
             BoardModel board;
-            board = BoardModel.Get(idx);
+            List<CommentModel> comments = CommentModel.CommentAll(idx);
+            List<LikeModel> likeList = LikeModel.findBoardCount(idx);
 
-            if(board == null)
+            int member_seq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+
+            LikeModel likeCheck = LikeModel.findBoardLike(idx, member_seq);
+
+            if (likeCheck == null)
+            {
+                ViewBag.likeOrNot = 0;
+            } else
+            {
+                ViewBag.likeOrNot = 1;
+            }
+
+
+      
+
+            board = BoardModel.Get(idx);
+     
+            
+
+            if (board == null)
             {
                 return Redirect("/board/boardNull");
             }
@@ -113,7 +160,7 @@ namespace Kyowon_Toy.Controllers
             BoardModel nextBoard;
             nextBoard = BoardModel.Next(idx);
 
-            if(nextBoard == null)
+            if (nextBoard == null)
             {
                 nextBoard = new BoardModel();
                 nextBoard.title = "마지막 게시글 입니다.";
@@ -131,26 +178,24 @@ namespace Kyowon_Toy.Controllers
             ViewBag.NextBoard = nextBoard;
             ViewBag.preBoard = preBoard;
 
+            ViewBag.comments = comments;
+            ViewBag.likeList = likeList;
+            ViewBag.likeCheck = likeCheck;
 
 
             return View(board);
         }
 
-        public IActionResult Search(string type ,string keyword)
-        {
 
-            return View();
-        }
 
 
         [Authorize]
-        public IActionResult BoardEdit(uint idx, string type)
+        public IActionResult BoardEdit(int idx, string type)
         {
             var board = BoardModel.Get(idx);
 
-            var userSeq = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            if (board.user != userSeq)
+            var userSeq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if(userSeq != board.user)
             {
                 throw new Exception("수정 할 수 없습니다.");
             }
@@ -160,24 +205,25 @@ namespace Kyowon_Toy.Controllers
                 return View(board);
             }
             else if (type == "D")
-            {
-                board.Delete(idx);
-                return Redirect("/board/boardlist");
+                if (board.user != userSeq)
+                {
+                    board.Delete(idx);
+                    return Redirect("/board/boardlist");
 
-            }
+                }
             throw new Exception("잘못된 요청입니다.");
         }
 
 
         [Authorize]
-        public IActionResult BoardEdit_Input(uint idx, string title, string contents)
+        public IActionResult BoardEdit_Input(int idx, string title, string contents)
         {
             // idx가 안넘어옴
 
 
             var model = BoardModel.Get(idx);
 
-            var userSeq = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userSeq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
 
             if (model.user != userSeq)
@@ -195,3 +241,5 @@ namespace Kyowon_Toy.Controllers
 
     }
 }
+
+
