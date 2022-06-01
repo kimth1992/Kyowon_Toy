@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+
+@{
+    MemberModel member = ViewBag.member;
+    List<MailBoxModel> mailBoxList = ViewBag.mailBoxList;
+    int count = ViewBag.uncheckedMail;
+}
+
+<!DOCTYPE html>
 <html dir="ltr" lang="en">
 
 <head>
@@ -80,8 +88,8 @@
                                 <img src="/img/kyowon.jpg" alt="homepage" style="max-width: 80%; height: auto;" />
                             </b>
                             <!--End Logo icon -->
-                      
-                           
+
+
                         </a>
                     </div>
                     <!-- ============================================================== -->
@@ -106,91 +114,27 @@
                     <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
                         <!-- Notification -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
-                               id="bell" role="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                <span><i data-feather="bell" class="svg-icon"></i></span>
-                                <span class="badge badge-primary notify-no rounded-circle">333</span>
-                            </a>
+
                             <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
                                 <ul class="list-style-none">
                                     <li>
                                         <div class="message-center notifications position-relative">
                                             <!-- Message -->
-                                            <a href="javascript:void(0)"
-                                               class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle">
-                                                    <i data-feather="airplay" class="text-white"></i>
-                                                </div>
-                                                <div class="w-75 d-inline-block v-middle pl-2">
-                                                    <h6 class="message-title mb-0 mt-1">Luanch Admin</h6>
-                                                    <span class="font-12 text-nowrap d-block text-muted">
-                                                        Just see
-                                                        the my new
-                                                        admin!
-                                                    </span>
-                                                    <span class="font-12 text-nowrap d-block text-muted">9:30 AM</span>
-                                                </div>
-                                            </a>
                                             <!-- Message -->
-                                            <a href="javascript:void(0)"
-                                               class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <span class="btn btn-success text-white rounded-circle btn-circle">
-                                                    <i data-feather="calendar" class="text-white"></i>
-                                                </span>
-                                                <div class="w-75 d-inline-block v-middle pl-2">
-                                                    <h6 class="message-title mb-0 mt-1">Event today</h6>
-                                                    <span class="font-12 text-nowrap d-block text-muted text-truncate">
-                                                        Just
-                                                        a reminder that you have event
-                                                    </span>
-                                                    <span class="font-12 text-nowrap d-block text-muted">9:10 AM</span>
-                                                </div>
-                                            </a>
                                             <!-- Message -->
-                                            <a href="javascript:void(0)"
-                                               class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <span class="btn btn-info rounded-circle btn-circle">
-                                                    <i data-feather="settings" class="text-white"></i>
-                                                </span>
-                                                <div class="w-75 d-inline-block v-middle pl-2">
-                                                    <h6 class="message-title mb-0 mt-1">Settings</h6>
-                                                    <span class="font-12 text-nowrap d-block text-muted text-truncate">
-                                                        You
-                                                        can customize this template
-                                                        as you want
-                                                    </span>
-                                                    <span class="font-12 text-nowrap d-block text-muted">9:08 AM</span>
-                                                </div>
-                                            </a>
                                             <!-- Message -->
-                                            <a href="javascript:void(0)"
-                                               class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <span class="btn btn-primary rounded-circle btn-circle">
-                                                    <i data-feather="box" class="text-white"></i>
-                                                </span>
-                                                <div class="w-75 d-inline-block v-middle pl-2">
-                                                    <h6 class="message-title mb-0 mt-1">Pavan kumar</h6> <span class="font-12 text-nowrap d-block text-muted">
-                                                        Just
-                                                        see the my admin!
-                                                    </span>
-                                                    <span class="font-12 text-nowrap d-block text-muted">9:02 AM</span>
-                                                </div>
-                                            </a>
+
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="nav-link pt-3 text-center text-dark" href="javascript:void(0);">
-                                            <strong>Check all notifications</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
+
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                      
 
-                     
+
+
 
 
                         <!-- End Notification -->
@@ -198,103 +142,52 @@
                         <!-- create new -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i data-feather="settings" class="svg-icon"></i>
-                            </a>
+
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
                         <li class="nav-item d-none d-md-block">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <div class="customize-input">
-                                    <select class="custom-select form-control bg-white custom-radius custom-shadow border-0">
-                                        <option selected>EN</option>
-                                        <option value="1">AB</option>
-                                        <option value="2">AK</option>
-                                        <option value="3">BE</option>
-                                    </select>
-                                </div>
-                            </a>
+
                         </li>
+
+
+
                     </ul>
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
+
+
+
+
+
+
+
                     <ul class="navbar-nav float-right">
 
-                        <!-- 추가한 부분 메일함 -->
-                        <!-- 추가한 부분 메일함 -->
-                        <!-- 추가한 부분 메일함 -->
 
-                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">111</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
+
+
+
+
+                        <!-- 추가한 부분 메일함 -->
+                        <!-- 추가한 부분 메일함 -->
+                        <!-- 추가한 부분 메일함 -->
+                        @if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+                        {
+
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="/mailbox/mailboxlist" id="messagesDropdown" type="button">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">@count</span>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
+                                <!-- Dropdown - Messages -->
+
+
+
                         </li>
+                        }
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
@@ -315,54 +208,49 @@
                         <li class="nav-item dropdown">
                             @if (User.Identity.IsAuthenticated)
                             {
-                                
-                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+                                <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                <img src="/lib/adminmart-lite/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
-                                     width="40">
-                                <span>
-                                     <span class="text-dark">@User.Identity.Name</span><span class="text-dark">님, 안녕하세요.</span> 
-                                     <i data-feather="chevron-down" class="svg-icon"></i>
-                                </span>
-                            </a>
 
+                                    <img src="/upload/@(member.photo+"thumbnail.jpeg")" width="40" />
+                                    <span>
+                                        <span class="text-dark">@User.Identity.Name</span><span class="text-dark">님, 안녕하세요.</span>
+                                        <i data-feather="chevron-down" class="svg-icon"></i>
+                                    </span>
+                                </a>
 
                             }
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <a class="dropdown-item" href="javascript:void(0)">
+                                <a class="dropdown-item" href="/login/userinfo">
                                     <i data-feather="user"
                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Profile
+                                    내 정보
                                 </a>
-                                <a class="dropdown-item" href="javascript:void(0)">
-                                    <i data-feather="credit-card"
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    if (member.member_seq == 1)
+                                    {
+                                        <a class="dropdown-item" href="#">
+                                            <i data-feather="user"
                                        class="svg-icon mr-2 ml-1"></i>
-                                    My Balance
-                                </a>
-                                <a class="dropdown-item" href="javascript:void(0)">
-                                    <i data-feather="mail"
+                                            회원정보 관리
+                                        </a>
+
+                                        <a class="dropdown-item" href="javascript:void(0)">
+                                            <i data-feather="credit-card"
                                        class="svg-icon mr-2 ml-1"></i>
-                                    Inbox
-                                </a>
+                                            추가 기능을 만들까..?
+                                        </a>
+                                    }
+
+                                }
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)">
-                                    <i data-feather="settings"
-                                       class="svg-icon mr-2 ml-1"></i>
-                                    Account Setting
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)">
+                                <a class="dropdown-item" href="/login/logout">
                                     <i data-feather="power"
                                        class="svg-icon mr-2 ml-1"></i>
-                                    Logout
+                                    로그아웃
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <div class="pl-4 p-3">
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-info">
-                                        View
-                                        Profile
-                                    </a>
-                                </div>
+
                             </div>
                         </li>
                         <!-- ============================================================== -->
@@ -380,391 +268,393 @@
         <!-- ============================================================== -->
         <aside class="left-sidebar" data-sidebarbg="skin6">
             <!-- Sidebar scroll-->
-<div class="scroll-sidebar" data-sidebarbg="skin6">
-    <!-- Sidebar navigation-->
-    <nav class="sidebar-nav">
-        <ul id="sidebarnav">
-            <li class="list-divider"></li>
-            <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
+            <div class="scroll-sidebar" data-sidebarbg="skin6">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Applications</span></li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="/home/TicketList"
-                   aria-expanded="false">
-                    <i data-feather="tag" class="feather-icon"></i><span class="hide-menu">
-                        Ticket List
-                    </span>
-                </a>
-            </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/home/TicketList"
+                               aria-expanded="false">
+                                <i data-feather="tag" class="feather-icon"></i><span class="hide-menu">
+                                    Ticket List
+                                </span>
+                            </a>
+                        </li>
 
-              <li class="sidebar-item">
-                <a class="sidebar-link" href="/board/BoardList?page=1"
-                   aria-expanded="false">
-                    <i data-feather="tag" class="feather-icon"></i><span class="hide-menu">
-                        게시판
-                    </span>
-                </a>
-            </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/board/BoardList?page=1"
+                               aria-expanded="false">
+                                <i data-feather="tag" class="feather-icon"></i><span class="hide-menu">
+                                    게시판
+                                </span>
+                            </a>
+                        </li>
 
 
-            <li class="sidebar-item">
-                <a class="sidebar-link sidebar-link" href="/home/chat"
-                   aria-expanded="false">
-                    <i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">Chat</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link sidebar-link" href="app-calendar.html"
-                   aria-expanded="false">
-                    <i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Calendar</span>
-                </a>
-            </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="/home/chat"
+                               aria-expanded="false">
+                                <i data-feather="message-square" class="feather-icon"></i><span class="hide-menu">Chat</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="app-calendar.html"
+                               aria-expanded="false">
+                                <i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Calendar</span>
+                            </a>
+                        </li>
 
-            <li class="list-divider"></li>
-            <li class="nav-small-cap"><span class="hide-menu">Components</span></li>
-            <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                   aria-expanded="false">
-                    <i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Forms </span>
-                </a>
-                <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                    <li class="sidebar-item">
-                        <a href="form-inputs.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Form Inputs
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="form-input-grid.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Form Grids
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="form-checkbox-radio.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Checkboxes &
-                                Radios
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                   aria-expanded="false">
-                    <i data-feather="grid" class="feather-icon"></i><span class="hide-menu">Tables </span>
-                </a>
-                <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                    <li class="sidebar-item">
-                        <a href="table-basic.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Basic Table
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="table-dark-basic.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Dark Basic Table
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="table-sizing.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Sizing Table
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="table-layout-coloured.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Coloured
-                                Table Layout
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="table-datatable-basic.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Basic
-                                Datatables
-                                Layout
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                   aria-expanded="false">
-                    <i data-feather="bar-chart" class="feather-icon"></i><span class="hide-menu">Charts </span>
-                </a>
-                <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                    <li class="sidebar-item">
-                        <a href="chart-morris.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Morris Chart
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="chart-chart-js.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                ChartJs
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="chart-knob.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Knob Chart
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                   aria-expanded="false">
-                    <i data-feather="box" class="feather-icon"></i><span class="hide-menu">UI Elements </span>
-                </a>
-                <ul aria-expanded="false" class="collapse  first-level base-level-line">
-                    <li class="sidebar-item">
-                        <a href="ui-buttons.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Buttons
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-modals.html" class="sidebar-link">
-                            <span class="hide-menu"> Modals </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-tab.html" class="sidebar-link">
-                            <span class="hide-menu"> Tabs </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-tooltip-popover.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Tooltip &
-                                Popover
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-notification.html" class="sidebar-link">
-                            <span class="hide-menu">Notification</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-progressbar.html" class="sidebar-link">
-                            <span class="hide-menu">Progressbar</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-typography.html" class="sidebar-link">
-                            <span class="hide-menu">Typography</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-bootstrap.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Bootstrap
-                                UI
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-breadcrumb.html" class="sidebar-link">
-                            <span class="hide-menu">Breadcrumb</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-list-media.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                List
-                                Media
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-grid.html" class="sidebar-link">
-                            <span class="hide-menu"> Grid </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-carousel.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Carousel
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-scrollspy.html" class="sidebar-link">
-                            <span class="hide-menu">
-                                Scrollspy
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-toasts.html" class="sidebar-link">
-                            <span class="hide-menu"> Toasts</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="ui-spinner.html" class="sidebar-link">
-                            <span class="hide-menu"> Spinner </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link sidebar-link" href="ui-cards.html"
-                   aria-expanded="false">
-                    <i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">
-                        Cards
-                    </span>
-                </a>
-            </li>
-            <li class="list-divider"></li>
-            <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Components</span></li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                               aria-expanded="false">
+                                <i data-feather="file-text" class="feather-icon"></i><span class="hide-menu">Forms </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="form-inputs.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Form Inputs
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="form-input-grid.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Form Grids
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="form-checkbox-radio.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Checkboxes &
+                                            Radios
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                               aria-expanded="false">
+                                <i data-feather="grid" class="feather-icon"></i><span class="hide-menu">Tables </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="table-basic.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Basic Table
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="table-dark-basic.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Dark Basic Table
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="table-sizing.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Sizing Table
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="table-layout-coloured.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Coloured
+                                            Table Layout
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="table-datatable-basic.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Basic
+                                            Datatables
+                                            Layout
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                               aria-expanded="false">
+                                <i data-feather="bar-chart" class="feather-icon"></i><span class="hide-menu">Charts </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="chart-morris.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Morris Chart
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="chart-chart-js.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            ChartJs
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="chart-knob.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Knob Chart
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                               aria-expanded="false">
+                                <i data-feather="box" class="feather-icon"></i><span class="hide-menu">UI Elements </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse  first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="ui-buttons.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Buttons
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-modals.html" class="sidebar-link">
+                                        <span class="hide-menu"> Modals </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-tab.html" class="sidebar-link">
+                                        <span class="hide-menu"> Tabs </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-tooltip-popover.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Tooltip &
+                                            Popover
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-notification.html" class="sidebar-link">
+                                        <span class="hide-menu">Notification</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-progressbar.html" class="sidebar-link">
+                                        <span class="hide-menu">Progressbar</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-typography.html" class="sidebar-link">
+                                        <span class="hide-menu">Typography</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-bootstrap.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Bootstrap
+                                            UI
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-breadcrumb.html" class="sidebar-link">
+                                        <span class="hide-menu">Breadcrumb</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-list-media.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            List
+                                            Media
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-grid.html" class="sidebar-link">
+                                        <span class="hide-menu"> Grid </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-carousel.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Carousel
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-scrollspy.html" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            Scrollspy
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-toasts.html" class="sidebar-link">
+                                        <span class="hide-menu"> Toasts</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="ui-spinner.html" class="sidebar-link">
+                                        <span class="hide-menu"> Spinner </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="ui-cards.html"
+                               aria-expanded="false">
+                                <i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">
+                                    Cards
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
 
-            <!-- 사이드바 로그인 -->
-            <li class="sidebar-item">
-                <a class="sidebar-link sidebar-link" href="/Login/Login"
-                   aria-expanded="false">
-                    <i data-feather="lock" class="feather-icon"></i><span class="hide-menu">
-                        Login
-                    </span>
-                </a>
-            </li>
-              <!-- 사이드바 로그인 -->
+                        <!-- 사이드바 로그인 -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="/Login/Login"
+                               aria-expanded="false">
+                                <i data-feather="lock" class="feather-icon"></i><span class="hide-menu">
+                                    Login
+                                </span>
+                            </a>
+                        </li>
+                        <!-- 사이드바 로그인 -->
 
-            <li class="sidebar-item">
-                <a class="sidebar-link sidebar-link"
-                   href="/Login/register" aria-expanded="false">
-                    <i data-feather="lock"
-                       class="feather-icon"></i><span class="hide-menu">
-                        Register
-                    </span>
-                </a>
-            </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                   aria-expanded="false">
-                    <i data-feather="feather" class="feather-icon"></i><span class="hide-menu">
-                        Icons
-                    </span>
-                </a>
-                <ul aria-expanded="false" class="collapse first-level base-level-line">
-                    <li class="sidebar-item">
-                        <a href="icon-fontawesome.html" class="sidebar-link">
-                            <span class="hide-menu"> Fontawesome Icons </span>
-                        </a>
-                    </li>
 
-                    <li class="sidebar-item">
-                        <a href="icon-simple-lineicon.html" class="sidebar-link">
-                            <span class="hide-menu"> Simple Line Icons </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link"
+                               href="/Login/register" aria-expanded="false">
+                                <i data-feather="lock"
+                                   class="feather-icon"></i><span class="hide-menu">
+                                    Register
+                                </span>
+                            </a>
+                        </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link has-arrow" href="javascript:void(0)"
-                   aria-expanded="false">
-                    <i data-feather="crosshair" class="feather-icon"></i><span class="hide-menu">
-                        Multi
-                        level
-                        dd
-                    </span>
-                </a>
-                <ul aria-expanded="false" class="collapse first-level base-level-line">
-                    <li class="sidebar-item">
-                        <a href="javascript:void(0)" class="sidebar-link">
-                            <span class="hide-menu"> item 1.1</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="javascript:void(0)" class="sidebar-link">
-                            <span class="hide-menu"> item 1.2</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="has-arrow sidebar-link" href="javascript:void(0)"
-                           aria-expanded="false"><span class="hide-menu">Menu 1.3</span></a>
-                        <ul aria-expanded="false" class="collapse second-level base-level-line">
-                            <li class="sidebar-item">
-                                <a href="javascript:void(0)" class="sidebar-link">
-                                    <span class="hide-menu">
-                                        item
-                                        1.3.1
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="javascript:void(0)" class="sidebar-link">
-                                    <span class="hide-menu">
-                                        item
-                                        1.3.2
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="javascript:void(0)" class="sidebar-link">
-                                    <span class="hide-menu">
-                                        item
-                                        1.3.3
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="javascript:void(0)" class="sidebar-link">
-                                    <span class="hide-menu">
-                                        item
-                                        1.3.4
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="javascript:void(0)" class="sidebar-link">
-                            <span class="hide-menu">
-                                item
-                                1.4
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="list-divider"></li>
-            <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
-            <li class="sidebar-item">
-                <a class="sidebar-link sidebar-link" href="//docs/docs.html"
-                   aria-expanded="false">
-                    <i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Documentation</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link sidebar-link" href="/login/logout"
-                   aria-expanded="false">
-                    <i data-feather="log-out" class="feather-icon"></i><span class="hide-menu">Logout</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <!-- End Sidebar navigation -->
-</div>
-<!-- End Sidebar scroll-->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                               aria-expanded="false">
+                                <i data-feather="feather" class="feather-icon"></i><span class="hide-menu">
+                                    Icons
+                                </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="icon-fontawesome.html" class="sidebar-link">
+                                        <span class="hide-menu"> Fontawesome Icons </span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="icon-simple-lineicon.html" class="sidebar-link">
+                                        <span class="hide-menu"> Simple Line Icons </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow" href="javascript:void(0)"
+                               aria-expanded="false">
+                                <i data-feather="crosshair" class="feather-icon"></i><span class="hide-menu">
+                                    Multi
+                                    level
+                                    dd
+                                </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level base-level-line">
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <span class="hide-menu"> item 1.1</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <span class="hide-menu"> item 1.2</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="has-arrow sidebar-link" href="javascript:void(0)"
+                                       aria-expanded="false"><span class="hide-menu">Menu 1.3</span></a>
+                                    <ul aria-expanded="false" class="collapse second-level base-level-line">
+                                        <li class="sidebar-item">
+                                            <a href="javascript:void(0)" class="sidebar-link">
+                                                <span class="hide-menu">
+                                                    item
+                                                    1.3.1
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="javascript:void(0)" class="sidebar-link">
+                                                <span class="hide-menu">
+                                                    item
+                                                    1.3.2
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="javascript:void(0)" class="sidebar-link">
+                                                <span class="hide-menu">
+                                                    item
+                                                    1.3.3
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="sidebar-item">
+                                            <a href="javascript:void(0)" class="sidebar-link">
+                                                <span class="hide-menu">
+                                                    item
+                                                    1.3.4
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="javascript:void(0)" class="sidebar-link">
+                                        <span class="hide-menu">
+                                            item
+                                            1.4
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Extra</span></li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="//docs/docs.html"
+                               aria-expanded="false">
+                                <i data-feather="edit-3" class="feather-icon"></i><span class="hide-menu">Documentation</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link sidebar-link" href="/login/logout"
+                               aria-expanded="false">
+                                <i data-feather="log-out" class="feather-icon"></i><span class="hide-menu">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
         </aside>
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
@@ -775,22 +665,22 @@
         <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
-            <!-- 
-                @if (User.Identity.IsAuthenticated)
-                            {
-                                
-                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+            <!--
+            @if (User.Identity.IsAuthenticated)
+            {
+
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                <img src="/lib/adminmart-lite/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
+                                        <img src="/lib/adminmart-lite/assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
                                      width="40">
-                                <span class="ml-2 d-none d-lg-inline-block">
-                                    <span>Hello,</span> <span class="text-dark">@User.Identity.Name</span> <i data-feather="chevron-down"
+                                        <span class="ml-2 d-none d-lg-inline-block">
+                                            <span>Hello,</span> <span class="text-dark">@User.Identity.Name</span> <i data-feather="chevron-down"
                                                                                                     class="svg-icon"></i>
-                                </span>
-                            </a>
+                                        </span>
+                                    </a>
 
 
-                            }
+            }
                             -->
             <!-- ============================================================== -->
             <div class="page-breadcrumb">
@@ -798,21 +688,17 @@
                     <div class="col-7 align-self-center">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Good Morning @User.Identity.Name!</h3>
+                            <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">@User.Identity.Name 님, 안녕하세요! <br> 오늘도 좋은하루 보내시길 바랍니다. </h3>
 
-                        } else
-                        {
-                             <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Good Morning! &nbsp;&nbsp;좋은 하루 입니다.</h3>
                         }
-             
+                        else
+                        {
+                            <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">안녕하세요! &nbsp;&nbsp;좋은 하루 입니다.</h3>
+                        }
+
                     </div>
                     <div class="col-5 align-self-center">
                         <div class="customize-input float-right">
-                            <select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
-                                <option selected>10개씩 보기</option>
-                                <option value="1">15개씩 보기</option>
-                                <option value="2">20개씩 보기</option>
-                            </select>
                         </div>
                     </div>
                 </div>
@@ -832,7 +718,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center text-muted">
-                All Rights Reserved by Adminmart. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+                교원 개인프로젝트 by 김태호
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

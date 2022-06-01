@@ -1,0 +1,597 @@
+﻿@{
+    MailBoxModel mail = ViewBag.mail;
+    List<MailBoxFileModel> files = ViewBag.files;
+    MemberModel member = ViewBag.member;
+}
+
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+<div class="container">
+<h1>쪽지함 상세보기</h1>
+
+ <div id="modal" class="modal-overlay">
+    <div class="modal-window">
+        <div class="box">
+          <div class="title">
+              쪽지함
+          </div>
+          <div class="close-area">X</div>
+        </div>
+        <div class="content-in">
+            <form name = "usersend" action='resend' method="post" onsubmit="return checkValue()" enctype="multipart/form-data">
+              <div class="content1">
+                <br>
+                <label for="box1">발신자</label>
+                <br>
+                <div class="col-sm-4">
+                    <input type = "hidden" name = "sender_seq" value = "@mail.receiver_idx" />
+                    <input id='f-sender' type='text' name='sender.nickname' class="form-control" value="@member.name (@mail.receiver_idx)" readOnly>
+                </div>
+                <br>
+              </div>
+              <div class="content2">
+                <label for="f-receiver">수신자</label>
+                <br>
+                <div class="col-sm-4">
+                    <input type = "hidden" name = "reciever_seq" value = "@mail.sender_idx" />
+                    <input id='f-receiver' type='text' name='receiver.nickname' class="form-control"value="@mail.sender.name (@mail.sender_idx)" readOnly>
+                    <!-- <input type="button" name='findId' value="아이디확인"> -->
+                    
+                </div>
+                <!-- <textarea id="f-receiver" name="receiver" rows=1 cols=45></textarea>
+                <input type="button" name = 'idCheck' value="존재하는 회원인지 체크">  -->
+                <br>
+              </div>
+
+               <div class="content2">
+                        <label for="f-receiver">첨부파일</label>
+                        <br>
+                        <div class="col-sm-4">
+                            <input id='f-file' type='file' name='postedFiles' cols=60 class="form-control" multiple>
+                            <!-- <input type="button" name='findId' value="아이디확인"> -->
+
+                        </div>
+                        <!-- <textarea id="f-receiver" name="receiver" rows=1 cols=45></textarea>
+                        <input type="button" name = 'idCheck' value="존재하는 회원인지 체크">  -->
+                        <br>
+                    </div>
+
+
+
+              <div class="content3">
+                 
+                <label for="f-title">제목</label>
+                <br>
+                <textarea id="f-title"  name="title" rows=1 cols=73 class="form-control"></textarea>
+                <br>
+              </div>
+              <div class="content4">
+                <label for="f-content">내용</label>
+                <br>
+                <textarea id="f-content" name="content" rows=5 cols=73 class="form-control"></textarea>
+                <br>
+              </div>
+              <div>
+              <button id="btnsub" type="submit" class="btn btn-outline-secondary" onclick="getData()">보내기</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--   답장   -->
+
+
+
+    <div id="modal2" class="modal2-overlay2">
+    <div class="modal2-window">
+        <div class="box">
+          <div class="title">
+              쪽지함
+          </div>
+          <div class="close-area">X</div>
+        </div>
+        <div class="content-in">
+            <form name = "usersend" action='resend' method="post" onsubmit="return checkValue()" enctype="multipart/form-data">
+              <div class="content1">
+                <br>
+                <label for="box1">발신자</label>
+                <br>
+                <div class="col-sm-4">
+                    <input type = "hidden" name = "sender_seq" value = "@mail.receiver_idx" />
+                    <input id='f-sender' type='text' name='sender.nickname' class="form-control" value="@member.name (@mail.receiver_idx)" readOnly>
+                </div>
+                <br>
+              </div>
+              <div class="content2">
+                <label for="f-receiver">수신자</label>
+                <br>
+                <div class="col-sm-4">
+                     <input id='f-receiver' type='text' name='reciever_seq' class="form-control" required>
+                    <!-- <input type="button" name='findId' value="아이디확인"> -->
+                    
+                </div>
+                <!-- <textarea id="f-receiver" name="receiver" rows=1 cols=45></textarea>
+                <input type="button" name = 'idCheck' value="존재하는 회원인지 체크">  -->
+                <br>
+              </div>
+
+               <div class="content2">
+                        <label for="f-receiver">첨부파일</label>
+          
+                          @for(int i = 0; i < files.Count; i++)
+                                    {
+                            //  <span><a href = ""><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                               <span><a href = "~/MailBox/DownloadFile?idx=@member.member_seq&fileName=@files[i].fileName"><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                                    }
+
+                        <div class="col-sm-4">
+                            <input id='f-file' type='file' name='postedFiles' cols=60 class="form-control"  multiple>
+                            <!-- <input type="button" name='findId' value="아이디확인"> -->
+
+                        </div>
+                        <!-- <textarea id="f-receiver" name="receiver" rows=1 cols=45></textarea>
+                        <input type="button" name = 'idCheck' value="존재하는 회원인지 체크">  -->
+                        <br>
+                    </div>
+
+
+
+              <div class="content3">
+                 
+                <label for="f-title">제목</label>
+                <br>
+                <input type = "text" id="f-title"  name="title"  class="form-control" value = "FW: @mail.title">
+                <br>
+              </div>
+              <div class="content4">
+                <label for="f-content">내용</label>
+                <br>
+                 <textarea id="f-content" name="content" rows=5 cols=73 class="form-control"> @mail.content </textarea>
+            
+                <br>
+              </div>
+              <div>
+              <button id="btnsub" type="submit" class="btn btn-outline-secondary" onclick="getData()">보내기</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+   
+
+	<button id="btn-modal" class="btn btn-outline-primary btn-sm">답장</button>
+       <button id="btn-modal2" class="btn btn-outline-primary btn-sm">전달</button>
+
+<div class="big-box">
+  <div class="box2">
+      <span class="box-sender">발신자 : @mail.sender.name</span><br>
+      <span class="box-sendtime">보낸시간 : @mail.sent_time </span><br>
+      <span class="box-receivedtime">확인시간 : @mail.checked_time</span><br>
+            @if(files.Count > 0)
+            {<span>첨부파일 : </span>
+                
+            
+            @for(int i = 0; i < files.Count; i++)
+                                    {
+                            //  <span><a href = ""><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                               <span><a href = "~/MailBox/DownloadFile?idx=@member.member_seq&fileName=@files[i].fileName"><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                                    }
+                                    }
+  </div>
+  <hr>
+  <div class="box3">
+
+
+
+      <span class="box-title"><b>제목</b> : @mail.title</span><br>
+      <b>내용</b><br>
+      <span class="box-content">@mail.content</span>
+  </div>
+</div>
+<button class="btn btn-outline-secondary btn-sm" onclick="location.href='mailboxlist'">목록</button>
+  <a href='delete?idx=@mail.idx' class="btn btn-outline-secondary btn-sm">삭제</a> 
+
+
+</div><!-- .container -->
+
+<script>
+
+    const modal = document.getElementById("modal")
+    const btnModal = document.getElementById("btn-modal")
+    btnModal.addEventListener("click", e => {
+        modal.style.display = "flex"
+    })
+    
+    const closeBtn = modal.querySelector(".close-area")
+    closeBtn.addEventListener("click", e => {
+        modal.style.display = "none"
+    })
+    
+    modal.addEventListener("click", e => {
+      const evTarget = e.target
+        if(evTarget.classList.contains("modal-overlay")) {
+            modal.style.display = "none"
+        }
+    })
+    
+    $(document).on(selector, event, function() {
+
+}); 
+</script>
+
+
+<script>
+
+    const modal2 = document.getElementById("modal2")
+    const btnModal2 = document.getElementById("btn-modal2")
+    btnModal2.addEventListener("click", e => {
+        modal2.style.display = "flex"
+    })
+    
+    const closeBtn2 = modal2.querySelector(".close-area")
+    closeBtn2.addEventListener("click", e => {
+        modal2.style.display = "none"
+    })
+    
+    modal2.addEventListener("click", e => {
+      const evTarget = e.target
+        if(evTarget.classList.contains("modal-overlay2")) {
+            modal2.style.display = "none"
+        }
+    })
+    
+    $(document).on(selector, event, function() {
+
+}); 
+</script>
+
+
+
+
+
+<style>
+
+    
+    
+     /* 모달창 디자인 */
+    #modal.modal-overlay {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: none;
+      overflow: hidden;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(1.5px);
+      -webkit-backdrop-filter: blur(1.5px);
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    
+    #modal .modal-window {
+      background: rgba( 167, 201, 210, 0.70 );
+      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+      backdrop-filter: blur( 13.5px );
+      -webkit-backdrop-filter: blur( 13.5px );
+      border-radius: 3px;
+      border: 1px solid rgba( 255, 255, 255, 0.18 );
+      width: 750px;
+      position: absolute;
+      overflow-y: auto !important;
+      overflow: hidden;
+      max-height: 700px;
+      top: 100px;
+      xpadding: 20px;
+    }
+   
+    
+    #modal .title {
+      xborder: 1px solid gray;
+      padding-left: 20px;
+      padding-top: 20px;
+      height: 50px;
+      xdisplay: inline;
+      xtext-shadow: 1px 1px 2px gray;
+      color: black;
+      font-size:20px;
+      float:left;
+    }
+    
+    /* #modal .title h2 {
+      display: inline;
+      
+      
+    } */
+    
+    #modal .close-area {
+      display: inline;
+      float: right;
+      padding-right: 30px;
+      padding-top: 30px;
+      cursor: pointer;
+      xtext-shadow: 1px 1px 2px gray;
+      color: black;
+    }
+        
+     #modal .content {
+     
+      margin-top: 40px;
+      padding: 0px 10px;
+      text-shadow: 1px 1px 2px gray;
+      color: white;
+     }
+        
+      /* 쪽지함 모달안 디자인 */
+      .content-in {
+      xborder: 1px solid gray;
+      width: 700px;
+      padding:0 20 20 20;
+      margin: 0 auto;
+      margin-top:50px;
+    }
+    .sendbtn {
+      xborder: 1px solid red;
+      xwidth: 640px;
+      margin-top: 35px;
+      text-align: center;
+      
+    }
+    
+    /* 쪽지함 리스트 */
+   html,body { 
+   margin:0;
+   padding:0; 
+   width:100%; 
+   height:100% 
+   }
+   
+
+  media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+
+font-face {
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    } 
+    
+    body{
+      font-family:IBMPlexSansKR-Regular;
+
+    }
+
+    .listbtn {
+      xborder: 1px solid red;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .receiver {
+     xborder: 1px solid red;
+    }
+    .time {
+      font-size: 12px;
+      color: gray;
+    }
+    .mail {
+      xborder: 1px solid red;
+      border-bottom: solid 3px rgba(54, 181, 206, 0.67);
+    }
+    .p {
+      font-weight: 600;
+    }
+    .pp {
+      font-weight: 200;
+      margin-top: 5px;
+    }
+    .big-box {
+      margin-bottom: 50px;
+    }
+
+
+
+
+
+
+    
+
+
+
+     #modal2.modal2-overlay2 {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: none;
+      overflow: hidden;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(1.5px);
+      -webkit-backdrop-filter: blur(1.5px);
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+    
+    #modal2 .modal2-window {
+      background: rgba( 167, 201, 210, 0.70 );
+      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+      backdrop-filter: blur( 13.5px );
+      -webkit-backdrop-filter: blur( 13.5px );
+      border-radius: 3px;
+      border: 1px solid rgba( 255, 255, 255, 0.18 );
+      width: 750px;
+      position: absolute;
+      overflow-y: auto !important;
+      overflow: hidden;
+      max-height: 700px;
+      top: 100px;
+      xpadding: 20px;
+    }
+   
+    
+    #modal2 .title {
+      xborder: 1px solid gray;
+      padding-left: 20px;
+      padding-top: 20px;
+      height: 50px;
+      xdisplay: inline;
+      xtext-shadow: 1px 1px 2px gray;
+      color: black;
+      font-size:20px;
+      float:left;
+    }
+    
+    /* #modal .title h2 {
+      display: inline;
+      
+      
+    } */
+    
+    #modal2 .close-area {
+      display: inline;
+      float: right;
+      padding-right: 30px;
+      padding-top: 30px;
+      cursor: pointer;
+      xtext-shadow: 1px 1px 2px gray;
+      color: black;
+    }
+        
+     #modal2 .content {
+     
+      margin-top: 40px;
+      padding: 0px 10px;
+      text-shadow: 1px 1px 2px gray;
+      color: white;
+     }
+        
+      /* 쪽지함 모달안 디자인 */
+      .content-in {
+      xborder: 1px solid gray;
+      width: 700px;
+      padding:0 20 20 20;
+      margin: 0 auto;
+      margin-top:50px;
+    }
+    .sendbtn {
+      xborder: 1px solid red;
+      xwidth: 640px;
+      margin-top: 35px;
+      text-align: center;
+      
+    }
+    
+    /* 쪽지함 리스트 */
+   html,body { 
+   margin:0;
+   padding:0; 
+   width:100%; 
+   height:100% 
+   }
+   
+
+  media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+
+font-face {
+      font-family: 'IBMPlexSansKR-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    } 
+    
+    body{
+      font-family:IBMPlexSansKR-Regular;
+
+    }
+
+    .listbtn {
+      xborder: 1px solid red;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .receiver {
+     xborder: 1px solid red;
+    }
+    .time {
+      font-size: 12px;
+      color: gray;
+    }
+    .mail {
+      xborder: 1px solid red;
+      border-bottom: solid 3px rgba(54, 181, 206, 0.67);
+    }
+    .p {
+      font-weight: 600;
+    }
+    .pp {
+      font-weight: 200;
+      margin-top: 5px;
+    }
+    .big-box {
+      margin-bottom: 50px;
+    }
+
+
+</style>
+
+
+
+
+

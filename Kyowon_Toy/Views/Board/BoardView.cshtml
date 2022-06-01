@@ -9,6 +9,8 @@
     List<LikeModel> likeList = ViewBag.likeList;
     var likeChech = ViewBag.likeCheck;
     var likeOrNot = ViewBag.likeOrNot;
+    MemberModel writer = ViewBag.writer;
+    List<FileModel> files = ViewBag.files;
 
 }
 
@@ -34,8 +36,8 @@
                         </colgroup>
                         <tbody>
                             <tr>
-                                <th>게시자 -> 조회수</th>
-                                <td>@Model.view_Cnt</td>
+                                <th>게시자</th>
+                                <td>@Model.userName</td>
                                 <th>게시일</th>
                                 <td>@Model.registeredDate.ToString("yyyy-MM-dd hh:mm:ss")</td>
                                 <th>게시 종료일</th>
@@ -43,15 +45,24 @@
                             </tr>
                             <tr>
                                 <th>부  서</th>
-                                <td>어딘가의 부서</td>
+                                <td>@writer.department</td>
                                 <th>직책</th>
-                                <td>뭔가의 직책</td>
+                                <td>@writer.position</td>
                                 <th>전화번호</th>
-                                <td>전화번호 가져오기</td>
+                                <td>@writer.office_Tel</td>
                             </tr>
                             <tr>
                                 <th>제목</th>
-                                <td colspan="5">@Model.title</td>
+                                <td colspan="3">@Model.title</td>
+                                <th>첨부파일</th>
+                                <td colspan="2">
+                                    @for(int i = 0; i < files.Count; i++)
+                                    {
+                            //  <span><a href = ""><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                             
+                               <span><a href = "~/Board/DownloadFile?idx=@Model.idx&fileName=@files[i].fileName"><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                                    }
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -60,8 +71,8 @@
                 <div>
                     <table class="table table-bordered no-wrap">
                         <colgroup>
-                            <col style="width:100px" />
-                            <col style="width:auto" />
+                            <col style="height:100px" />
+                            <col style="height:auto" />
                         </colgroup>
                         <tbody>
                             <tr>
@@ -74,6 +85,7 @@
 
 
                 <div class="text-right">
+                    <button class="btn btn-sm btn-primary" id = "viewer" onclick = "viewerList()">조회자 정보 </button>
                     @if (Model.user == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
                     {
                         <button id="btnU" class="btn btn-sm btn-primary">수정</button>
@@ -309,6 +321,10 @@
 
 <script>
 
+ function viewerList() {
+     window.open("boardcheck?idx=@Model.idx", "check", "width=600 height = 450");
+ }
+
   <!-- 좋아요 하트 변경 -->
 document.querySelectorAll("#heartBtn").forEach((tag) => {
 if (tag.getAttribute("value") == 1) {
@@ -331,13 +347,6 @@ if (tag.getAttribute("value") == 1) {
     });
 
 
-    function SubmitForm(commentIdx, idx, btn) {
-        var commentIdx = $("commentIdx").val();
-        var Idx = $("Idx").val();
-        var form = $(btn).closest("form");
-        form.submit();
-
-    }
 
 </script>
 

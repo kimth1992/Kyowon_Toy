@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <form id="form1" method="post" action="/board/BoardWrite_Input">
+                    <form id="form1" method="post" action="/board/BoardWrite_Input" enctype="multipart/form-data">
                         <table class="table table-bordered no-wrap">
                             <colgroup>
                                 <col style="width:100px" />
@@ -16,6 +16,10 @@
                                 <tr>
                                     <th>제목</th>
                                     <td><input name = "title" type="text" class="form-control" /></td>
+                                </tr>
+                                 <tr>
+                                    <th>첨부파일</th>
+                                    <td><input multiple="multiple" type="file"  name = "postedFiles"  class="form-control"  /></td>
                                 </tr>
                                 <tr>
                             <th>내용</th>

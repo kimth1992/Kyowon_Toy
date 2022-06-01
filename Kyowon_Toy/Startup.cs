@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Kyowon_Toy.Hubs;
 using Kyowon_Toy.Services;
 
 namespace Kyowon_Toy
@@ -68,7 +67,7 @@ namespace Kyowon_Toy
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-                endpoints.MapHub<ChatHub>("/chatHub");
+         
             });
         }
     }

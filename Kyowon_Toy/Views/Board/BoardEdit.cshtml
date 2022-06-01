@@ -1,6 +1,11 @@
 ﻿@using System.Security.Claims
 @model BoardModel
 
+@{
+    List<FileModel> files = ViewBag.files;
+ 
+}
+
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
@@ -9,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <form id="form1" method="post" action="/board/BoardEdit_Input">
+                    <form id="form1" method="post" action="/board/BoardEdit_Input" enctype="multipart/form-data">
                         <!--@Html.Hidden("idx", Model.idx)-->
                        <input type="hidden" name="idx" value="@Model.idx" /> 
                         <table class="table table-bordered no-wrap">
@@ -23,6 +28,17 @@
                                     <td>
                                        <!-- @Html.TextBox("title", Model.title, new {@class = "form-control"}) -->
                                          <input name="title" type="text" value="@Model.title" class="form-control" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>첨부파일</th>
+                                    <td>
+                                        @for(int i = 0; i < files.Count; i++)
+                                    {
+                             
+                               <span><a href = "~/Board/DownloadFile?idx=@Model.idx&fileName=@files[i].fileName"><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                                    }
+                                        <input multiple="multiple" type="file"  name = "postedFiles"  class="form-control"  />
                                     </td>
                                 </tr>
                                 <tr>

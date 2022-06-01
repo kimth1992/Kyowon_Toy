@@ -1,0 +1,74 @@
+﻿@using System.Security.Claims
+
+
+
+@{
+    
+    List<CheckModel> checks = ViewBag.checks;
+    List<MemberModel> members = ViewBag.members;
+
+}
+
+<head>
+    <!-- Custom CSS -->
+    <link href="/lib/adminmart-lite/assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link href="/lib/adminmart-lite/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="/lib/adminmart-lite/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="/lib/adminmart-lite/dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/lib/adminmart-lite/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <!-- apps -->
+    <script src="/lib/adminmart-lite/dist/js/app-style-switcher.js"></script>
+    <script src="/lib/adminmart-lite/dist/js/feather.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/lib/adminmart-lite/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/lib/adminmart-lite/dist/js/custom.min.js"></script>
+    <!--This page JavaScript -->
+    <script src="/lib/adminmart-lite/assets/extra-libs/c3/d3.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/extra-libs/c3/c3.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="/lib/adminmart-lite/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="/lib/adminmart-lite/dist/js/pages/dashboards/dashboard1.min.js"></script>
+
+</head>
+
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+<style>
+    .modal-body {
+        text-align: center;
+    }
+</style>
+
+<div>
+
+ <table class="table table-striped table-bordered no-wrap">
+            <h2><div style = "text-align:center"><br> 조회자 목록 <br><br></div></h2>        
+                        <tbody>
+
+                            @for (int i = 0; i < checks.Count; i++)
+                            {
+                                <tr>
+                                    <td>@checks[i].registeredDate &nbsp;&nbsp;&nbsp;</td>
+                                    <td>@members[i].name (@members[i].member_seq)
+                                </tr>
+                            }
+                                            
+                                   
+                        </tbody>
+                    </table>
+
+   </div>

@@ -7,11 +7,12 @@
     int startPage = ViewBag.StartPage;
     int endPage = ViewBag.EndPage;
 
+
     if (page > totalPageCount)
     {
         totalPageCount = page;
     }
-
+    DateTime date = DateTime.Now;
 }
 
 <style>
@@ -69,11 +70,13 @@
                             <col style="width:100px" />
                             <col style="width:100px" />
                             <col style="width:20px" />
+                              <col style="width:20px" />
                         </colgroup>
                         <thead>
                             <tr>
                                 <th>번호</th>
                                 <th><center>제목</center></th>
+                                <th><center>첨부파일</center></th>
                                 <th><center>등록자</center></th>
                                 <th>게시일</th>
                                 <th><center>조회수</center></th>
@@ -88,13 +91,38 @@
                                     <td>
                                         <a href="/board/boardView?idx=@item.idx">
                                             @item.title
-                                            @if (item.commentList.Count() != 0)
+                                            
+                                            @if(@item.registeredDate.Month == DateTime.Now.Month && @item.registeredDate.Day == DateTime.Now.Day)
                                             {
-                                                item.commentList.Count();
+                                                var time = @date.Hour;
+                                                if(@item.registeredDate.Hour != time)
+                                                {
+                                                    var xx = @item.registeredDate.Minute - 30;
+                                                    if(DateTime.Now.Minute <= xx && DateTime.Now.Hour == @item.registeredDate.Hour + 1)
+                                                    {
+                                                        <span style = "color:red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[New]</span>
+                                                    } 
+                                                } else
+                                                {
+                                                        <span style = "color:red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[New]</span>
+                                                }
                                             }
+                                            @if(@item.commentList.Count > 0)
+                                            {
+                                           <span style = "color:orange">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[@item.commentList.Count()]</span>
+                                            }
+                                            
+                                      
+
                                         </a>
                                     </td>
                                     <!-- target="_blank"  새로운 페이지 띄우며 이동-->
+                                     <td>      @if(@item.fileList.Count > 0)
+                                            {
+                                                <span>
+                                                 <center><img src="/upload/save.jpeg" /></center>
+                                                </span>
+                                            }</td>
                                 <td>@item.userName</td>
                                     <td>@item.registeredDate</td>
                                     <td><center>@item.view_Cnt</center></td>
@@ -108,7 +136,7 @@
                     <div class="text-center">
                         <div class="btn-group">
                             <div>
-                                @if (startPage > 1)
+                                @if (startPage >= 1)
                                 {
                                     <button type="button" class="btn btn-link">
                                         <a href="?page=1">&lt;&lt;</a>

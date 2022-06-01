@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Web;
 
 namespace Kyowon_Toy.Models
 {
@@ -13,10 +14,11 @@ namespace Kyowon_Toy.Models
         public string name { get; set; }
         public string password { get; set; }
         public DateTime birthDay { get; set; }
-        public int grade { get; set; }
+        public int grade { get; set; } // 신입, 경력 구분
         public string department { get; set; }
         public string position { get; set; }
         public string photo { get; set; }
+
         public DateTime registeredDate { get; set; }
         public DateTime withdrawalDate { get; set; }
         public string email { get; set; }
@@ -24,6 +26,7 @@ namespace Kyowon_Toy.Models
         public string mobile_Tel { get; set; }
         public string address { get; set; }
         public int active { get; set; }
+        public string mainwork { get; set; }
 
 
 
@@ -98,7 +101,9 @@ birthDay,
 mobile_tel, 
 registeredDate,
 active,
-department
+department,
+position,
+photo
 )
 values(
 @grade,
@@ -108,7 +113,9 @@ values(
 @mobile_tel, 
 now(),
 1,
-@department)";
+@department,
+@position,
+@photo)";
             using (var db = new MysqlDapperHelper())
             {
                 return db.Execute(sql, this);
@@ -117,9 +124,6 @@ now(),
 
         public int UpdateEmail()
         {
-           // Debug.WriteLine("ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ1ㅡ");
-
-          //  Debug.WriteLine("새로 생성된 계정의 이메일 -> " + email);
 
             string sql = @"
 Update member set email = @email where member_seq = @member_seq";
@@ -129,17 +133,50 @@ Update member set email = @email where member_seq = @member_seq";
             }
         }
 
+
+        public int Update()
+        {
+
+
+            string sql = @"
+Update member set 
+department = @department,
+position = @position,
+photo = @photo,
+mobile_tel = @mobile_tel,
+office_tel = @office_tel,
+email = @email,
+mainwork = @mainwork
+where member_seq = @member_seq";
+            using (var db = new MysqlDapperHelper())
+            {
+                return db.Execute(sql, this);
+            }
+        }
+
+
+
+
         public static MemberModel Get(string name)
         {
             using (var db = new MysqlDapperHelper())
             {
                 string sql = @"
-select member_seq, name, password, department, position, photo, email, office_tel,
+select member_seq, name, password, department, position, photo, email, office_tel, birthday,
 mobile_tel, registeredDate, address, active from member where name = @name";
                 return db.QuerySingle<MemberModel>(sql, new { name = name });
             }
         }
-
+        public static MemberModel findByNo(int member_seq)
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select member_seq, name, password, department, position, photo, email, office_tel, birthday,
+mobile_tel, registeredDate, address, active, mainwork from member where member_seq = @member_seq";
+                return db.QuerySingle<MemberModel>(sql, new { member_seq = member_seq });
+            }
+        }
 
 
 

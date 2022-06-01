@@ -1,0 +1,69 @@
+코이노 원격제어툴
+ID/PW : kyowon/kyowon
+
+익스체인지 관리자
+https://mail.kyowon.co.kr/ecp/
+ID/PW : kyowon\ekpadmin / ezekp!234
+
+CDN 경로
+ \\172.16.30.44\wcms\ktalk
+ID/PW : administrator / netapp
+
+CDN 관리자 페이지
+https://csp30.ktcdn.com/Login 
+ID/PW :  kyowonadmin /kyowonadmin1@
+
+스팸 관리 페이지
+http://spam.kyowon.co.kr:9000/
+ID/PW : cyber   /  ~shield_
+로그보는법 : 통계관리 -> log
+
+hitam Ktalk 서버 접속
+ID/PW : administrator / kw@ipt
+
+hitam EKP 서버 접속
+ID/PW : kyowon\ekpadmin / ezekp!234
+개발서버(ezEKP1,2,3) : administrator/ ezekp!234
+ezEKP 1번은 소스
+2번은 메일, DB 담당
+
+가온아이 voc
+ID/PW : Kyowon/kyowon!
+
+자산관리/라이센스 : 박영민 파트장님
+HI-TAM, 방화벽 : 김한준 매니저님
+SSLVPN/원격 : 이광진 매니저님
+네트워크 설치/IP : 나기오 파트장님
+공유폴더 : 이상엽 매니저님
+내부 DNS : 조민규 파트장님
+서버 문의 : 변재언 매니저님, 최정민 매니저님
+WAS : 박상현 파트장, 김종훈 매니저님
+DB : 신현철 매니저, 임성호 매니저님
+EKP/Ktalk/RPA : 우상원 파트장님, 한승준 매니저님
+MS 프로그램(아웃룩) : 최솔지 매니저님
+IPT 유지보수 : 정민호 과장님
+네트워크 유지보수 : 유의선 대리님
+PC 유지보수 : 강장우 부장님,양승보 과장님
+DLP(상대방 IP기반 외부 시스템 막아놓는 것), DRM(문서 암호화) : 보안파트(나기오 파트장님 파트 업무)
+-> 이광진 매니저님, 김한준 매니저님, 나기오 파트장님은 자산관리 프로그램, 회선관리 등
+
+자산관리 파트 : 박영민 파트장님, 정혁 매니저, 강병우 매니저, 최솔지 매니저(비용처리)
+
+인프라 파트 : 조민규 파트장님, 최정민 매니저님, 이상엽 매니저님(공유폴더), 변재언 매니저님(백업)
+
+기반기술 파트 : 박상현 파트장님, 신현철 매니저님(DBA, DBSAFER), 임성호 매니저님(DBA)
+KW링크 : SSO연동 하는 공용시스템 (박상현 파트장님)
+
+
+
+KSS
+구몬 : 박만건 매니저님
+EDU : 나종철 파트장님
+Wells : 한상문 매니저님
+
+E-AC : 김인수 파트장님, 김민지 매니저님(비용, 정산 관련 -> 예산이관, 비용집행, 야근식대 등 비용정산 문제)
+E-HR : 문창주 파트장님, 이태형 매니저님(출장, 근태)
+SAP(발주의뢰서) == MM(구매): 전병무 매니저님(발주의뢰서, 구매제작부문->교육상품제작팀->발주의뢰서(SAP 연동)
+
+법무시스템 : 손윤호 매니저님
+행낭관리 / 팀 주소 변경 : 이승석 매니저님

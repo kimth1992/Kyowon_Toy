@@ -19,19 +19,13 @@ namespace Kyowon_Toy.Models
         public short active { get; set; }
         public short type { get; set; }
         public int like { get; set; }
+        public string fileName { get; set; }
 
-        public List<CommentModel> commentList = new List<CommentModel>();
+
+        public List<CommentModel> commentList { get; set; }
+        public List<FileModel> fileList { get; set; }
         
-        public List<CommentModel> getCommentList()
-        {
-            return commentList;
-        }
-
-        public void setCommentList(List<CommentModel> commentList)
-        {
-            this.commentList = commentList;
-        }
-
+       
 
         // 리미트 값 같은것을 넣어서 여기서 페이징 처리 해야되는 것 같아
         // 현재 이건 제목으로 검색한 걸 역순으로 하는 듯
@@ -122,6 +116,16 @@ from board where active = 1";
                 string sql = @"
 select * from board where idx = @idx and active = 1";
                 return db.QuerySingle<BoardModel>(sql, new { idx = idx });
+            }
+        }
+
+        public static BoardModel findByTile(string title)
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select * from board where title = @title";
+                return db.QuerySingle<BoardModel>(sql, new { title = title });
             }
         }
 

@@ -11,7 +11,7 @@ namespace Kyowon_Toy.Models
 
         public int commentBoard_idx { get; set; }
         public int member_seq { get; set; }
-        public string name { get; set; } // 댓글 작성자 이름
+        public string name { get; set; } // 댓글 작성자 
         public string content { get; set; }
         public DateTime registeredDate { get; set; }
 
