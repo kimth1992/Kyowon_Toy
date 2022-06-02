@@ -86,7 +86,8 @@
 
                 <div class="text-right">
                     <button class="btn btn-sm btn-primary" id = "viewer" onclick = "viewerList()">조회자 정보 </button>
-                    @if (Model.user == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                   
+                    @if (Model.user == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)) || Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)) == 1)
                     {
                         <button id="btnU" class="btn btn-sm btn-primary">수정</button>
                         <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">삭제</button>

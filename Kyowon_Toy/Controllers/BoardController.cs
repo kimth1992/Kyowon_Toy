@@ -54,7 +54,7 @@ namespace Kyowon_Toy.Controllers
 
 
 
-        public IActionResult BoardList(int page, string key, string keyword)
+        public IActionResult BoardList(int page, string key, string keyword, int type)
         {
 
 
@@ -107,7 +107,27 @@ namespace Kyowon_Toy.Controllers
             }
             else
             {
+                if(type == 1)
+                {
+                boards = BoardModel.gBoardAll();
+                }
+               else if (type == 2)
+                {
+                boards = BoardModel.eBoardAll();
+                }
+                else if (type == 3)
+                {
+                    boards = BoardModel.wBoardAll();
+                }
+                else if (type == 4)
+                {
+                    boards = BoardModel.dBoardAll();
+                }
+
+                else
+                {
                 boards = BoardModel.BoardAll();
+                }
             }
 
             //var boards = BoardModel.BoardAll();
@@ -158,6 +178,8 @@ namespace Kyowon_Toy.Controllers
             return View(answer);
 
         }
+
+        
 
 
         [Authorize]
@@ -376,10 +398,7 @@ namespace Kyowon_Toy.Controllers
             var board = BoardModel.Get(idx);
 
             var userSeq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            if(userSeq != board.user)
-            {
-                throw new Exception("수정 할 수 없습니다.");
-            }
+         
 
             if (type == "U")
             {
@@ -395,7 +414,7 @@ namespace Kyowon_Toy.Controllers
             throw new Exception("잘못된 요청입니다.");
         }
 
-        public IActionResult BoardWrite_Input(string title, string contents, List<IFormFile> postedFiles)
+        public IActionResult BoardWrite_Input(string title, string contents, List<IFormFile> postedFiles, int type)
         {
 
 
@@ -453,6 +472,7 @@ namespace Kyowon_Toy.Controllers
             model.contents = contents;
             model.user = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             model.userName = User.Identity.Name;
+            model.type = type;
             model.Insert();
 
 
@@ -466,9 +486,12 @@ namespace Kyowon_Toy.Controllers
             }
 
 
+    
+          return Redirect("/board/boardlist?type="+type);
 
+            
+       
 
-            return Redirect("/board/boardlist");
         }
 
 

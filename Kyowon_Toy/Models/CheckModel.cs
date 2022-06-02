@@ -63,7 +63,8 @@ now())";
                 string sql = @"
 SELECT idx, board_idx, member_seq, registeredDate 
 from boardcheck 
-WHERE board_idx = @board_idx";
+WHERE board_idx = @board_idx
+order by registeredDate desc";
 
                 return db.Query<CheckModel>(sql, new { board_idx = board_idx });
             }

@@ -40,6 +40,17 @@ namespace Kyowon_Toy.Models
             this.password = System.Convert.ToBase64String(hash);
         }
 
+        public int Delete(int member_seq)
+        {
+            string sql = @"
+update member set active = 0 where member_seq = @member_seq";
+
+            using (var db = new MysqlDapperHelper())
+            {
+                return db.Execute(sql, this);
+            }
+        }
+
 
         public static List<MemberModel> GetList(string sex)
         {
@@ -139,7 +150,7 @@ Update member set email = @email where member_seq = @member_seq";
 
 
             string sql = @"
-Update member set 
+Update member set
 department = @department,
 position = @position,
 photo = @photo,
@@ -154,6 +165,25 @@ where member_seq = @member_seq";
             }
         }
 
+        public int UpdateAdmin()
+        {
+
+
+            string sql = @"
+Update member set
+member_seq = @member_seq,
+name = @name,
+department = @department,
+position = @position,
+office_tel = @office_tel,
+mobile_tel = @mobile_tel,
+email = @email
+where member_seq = @member_seq";
+            using (var db = new MysqlDapperHelper())
+            {
+                return db.Execute(sql, this);
+            }
+        }
 
 
 
@@ -211,6 +241,71 @@ where member_seq = @member_seq";
 
 
         }
+
+
+        public static List<MemberModel> SearchMember_seq(int member_seq)
+        {
+
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select
+member_seq, name, department, position, email, 
+office_tel, mobile_tel, active
+from member 
+where
+active = 1 and member_seq like concat('%', IFNULL(@member_seq,''), '%')
+order by member_seq desc";
+
+
+
+                return db.Query<MemberModel>(sql, new { member_seq = member_seq });
+            }
+        }
+
+        public static List<MemberModel> SearchUsername(string name)
+        {
+
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select
+member_seq, name, department, position, email, 
+office_tel, mobile_tel, active 
+from member 
+where
+active = 1 and name like concat('%', IFNULL(@name,''), '%')
+order by member_seq desc";
+
+
+
+                return db.Query<MemberModel>(sql, new { name = name });
+            }
+        }
+
+        public static List<MemberModel> SearchDepartment(string department)
+        {
+
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select
+member_seq, name, department, position, email, 
+office_tel, mobile_tel, active
+from member 
+where
+active = 1 and department like concat('%', IFNULL(@department,''), '%')
+order by member_seq desc";
+
+
+
+                return db.Query<MemberModel>(sql, new { department = department });
+            }
+        }
+
+
+
+
 
 
 

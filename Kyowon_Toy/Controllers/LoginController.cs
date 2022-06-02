@@ -57,6 +57,191 @@ namespace Kyowon_Toy.Controllers
         }
 
 
+
+        public IActionResult adminmember(string key, string keyword)
+        {
+
+
+            List<MailBoxModel> mailBoxList = MailBoxModel.findByAll();
+            int member_seq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            MemberModel member = MemberModel.findByNo(member_seq);
+
+            int count = 0;
+            if (member != null)
+            {
+                for (int i = 0; i < mailBoxList.Count; i++)
+                {
+                    if (mailBoxList[i].receiver_idx.Equals(member.member_seq))
+                    {
+                        if (mailBoxList[i].checked_time.Year == 0001)
+                        {
+                            count++; // 안읽은 메일 수
+                        }
+                    }
+                }
+            }
+            ViewBag.uncheckedMail = count;
+
+
+            List<MemberModel> members;
+
+            if (keyword != null)
+            {
+                if (key == "username")
+                {
+                    members = MemberModel.SearchUsername(keyword);
+
+                }
+                else if (key == "member_seq")
+                {
+                    members = MemberModel.SearchMember_seq(Convert.ToInt32(keyword));
+                }
+                else if (key == "department")
+                {
+                    members = MemberModel.SearchDepartment(keyword);
+                }
+                else
+                {
+                    members = null;
+                }
+            }
+            else
+            {
+                members = new List<MemberModel>();
+            }
+
+            //var boards = BoardModel.BoardAll();
+
+
+
+            
+           
+            ViewBag.member = member;
+            ViewBag.members = members;
+
+            //return View(BoardModel.GetList(search));
+            return View();
+
+        }
+
+
+        [Authorize]
+        public IActionResult MemberView(int idx)
+        {
+
+            List<MailBoxModel> mailBoxList = MailBoxModel.findByAll();
+            int member_seq = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            MemberModel member = MemberModel.findByNo(member_seq);
+            MemberModel searchMember = MemberModel.findByNo(idx);
+
+            int count = 0;
+            if (member != null)
+            {
+                for (int i = 0; i < mailBoxList.Count; i++)
+                {
+                    if (mailBoxList[i].receiver_idx.Equals(member.member_seq))
+                    {
+                        if (mailBoxList[i].checked_time.Year == 0001)
+                        {
+                            count++; // 안읽은 메일 수
+                        }
+                    }
+                }
+            }
+            ViewBag.uncheckedMail = count;
+            ViewBag.member = member;
+            ViewBag.searchMember = searchMember;
+
+
+            return View();
+        }
+
+
+        [Authorize]
+        public IActionResult adminEdit(int member_seq, string type)
+        {
+
+            List<MailBoxModel> mailBoxList = MailBoxModel.findByAll();
+            MemberModel member = MemberModel.findByNo(member_seq);
+
+            int count = 0;
+            if (member != null)
+            {
+                for (int i = 0; i < mailBoxList.Count; i++)
+                {
+                    if (mailBoxList[i].receiver_idx.Equals(member.member_seq))
+                    {
+                        if (mailBoxList[i].checked_time.Year == 0001)
+                        {
+                            count++; // 안읽은 메일 수
+                        }
+                    }
+                }
+            }
+            ViewBag.uncheckedMail = count;
+            ViewBag.member = member;
+
+
+
+            if (type == "U")
+            {
+                return View(member);
+            }
+            else if (type == "D")
+            {
+
+                member.Delete(member_seq);
+                    return Redirect("/login/adminmember");
+            }
+
+            throw new Exception("잘못된 요청입니다.");
+        }
+
+
+        public IActionResult adminEdit_input(int member_seq, string name, string department, string position, string email, string office_tel, string mobile_tel)
+        {
+
+            List<MailBoxModel> mailBoxList = MailBoxModel.findByAll();
+            MemberModel member = MemberModel.findByNo(member_seq);
+
+            int count = 0;
+            if (member != null)
+            {
+                for (int i = 0; i < mailBoxList.Count; i++)
+                {
+                    if (mailBoxList[i].receiver_idx.Equals(member.member_seq))
+                    {
+                        if (mailBoxList[i].checked_time.Year == 0001)
+                        {
+                            count++; // 안읽은 메일 수
+                        }
+                    }
+                }
+            }
+            ViewBag.uncheckedMail = count;
+
+
+            member.member_seq = member_seq;
+            member.name = name;
+            member.office_Tel = office_tel;
+            member.department = department;
+            member.position = position;
+            member.email = email;
+            member.mobile_Tel = mobile_tel;
+
+            member.UpdateAdmin();
+
+
+            return Redirect("/login/adminmember?key=username&keyword=" + member.name);
+
+
+
+
+        }
+
+
+
+
         public IActionResult Update(int member_seq, string department, string position, string mobile_tel, string office_tel, string email, string mainwork)
         {
             List<MailBoxModel> mailBoxList = MailBoxModel.findByAll();

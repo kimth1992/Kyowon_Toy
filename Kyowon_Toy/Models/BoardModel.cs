@@ -17,7 +17,7 @@ namespace Kyowon_Toy.Models
 
         public int view_Cnt { get; set; }
         public short active { get; set; }
-        public short type { get; set; }
+        public int type { get; set; }
         public int like { get; set; }
         public string fileName { get; set; }
 
@@ -101,8 +101,64 @@ order by idx desc";
                 string sql = @"
 select
 idx, title, user, username, registeredDate, 
-view_cnt, active 
+view_cnt, active, type
 from board where active = 1";
+
+                return db.Query<BoardModel>(sql, null);
+            }
+        }
+
+        public static List<BoardModel> gBoardAll()
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select
+idx, title, user, username, registeredDate, 
+view_cnt, active, type
+from board where active = 1 and type = 1";
+
+                return db.Query<BoardModel>(sql, null);
+            }
+        }
+
+        public static List<BoardModel> eBoardAll()
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select
+idx, title, user, username, registeredDate, 
+view_cnt, active, type
+from board where active = 1 and type = 2";
+
+                return db.Query<BoardModel>(sql, null);
+            }
+        }
+
+        public static List<BoardModel> wBoardAll()
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select
+idx, title, user, username, registeredDate, 
+view_cnt, active, type
+from board where active = 1 and type = 3";
+
+                return db.Query<BoardModel>(sql, null);
+            }
+        }
+
+        public static List<BoardModel> dBoardAll()
+        {
+            using (var db = new MysqlDapperHelper())
+            {
+                string sql = @"
+select
+idx, title, user, username, registeredDate, 
+view_cnt, active, type
+from board where active = 1 and type = 4";
 
                 return db.Query<BoardModel>(sql, null);
             }
@@ -186,7 +242,7 @@ values(
 @contents, 
 @user, 
 @username, 
-now(), 0, 1, 1)";
+now(), 0, 1, @type)";
             using (var db = new MysqlDapperHelper())
             {
                 return db.Execute(sql, this);
