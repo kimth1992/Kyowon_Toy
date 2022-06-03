@@ -126,6 +126,7 @@
                            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         @mailBoxList[i].sent_time
                            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
                         <button style="margin-left: 10px;" class="border-0 btn-transition btn btn-outline-secondary"
                         name="b-trashBtn" type="button" data-no="@mailBoxList[i].idx">
                             <i class="bi bi-trash"></i>
@@ -216,7 +217,34 @@
         $(document).on(selector, event, function() {
 
     });
+
+
+
+
+
+
 </script>
+
+
+
+<script>
+//휴지통 모달 열기 + mailbox.no 값 전달 
+$('button[name=b-trashBtn]').on('click', function(){
+  var no = $(this).data('no');
+  $(".transferNo #sendNo").val(no);
+$('#deleteModal').modal('show');
+});
+
+//휴지통 모달 안 취소 버튼>닫기
+// 모달 안의 취소 버튼에 이벤트를 건다.
+$('#d-cancelBtn').on('click', function(){
+$('#deleteModal').modal('hide');
+});
+
+
+
+</script>
+
 
 
 

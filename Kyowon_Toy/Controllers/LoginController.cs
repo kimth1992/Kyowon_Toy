@@ -240,6 +240,15 @@ namespace Kyowon_Toy.Controllers
         }
 
 
+        public int mobiletel_check(string mobile_tel)
+        {
+           List<MemberModel> memberList = MemberModel.mobileCheck(mobile_tel);
+
+            int data = memberList.Count();
+
+            return data;
+        }
+
 
 
         public IActionResult Update(int member_seq, string department, string position, string mobile_tel, string office_tel, string email, string mainwork)
@@ -572,7 +581,7 @@ namespace Kyowon_Toy.Controllers
 
                 member.Insert();
 
-                MemberModel member2 = MemberModel.Get(member.name);
+                MemberModel member2 = MemberModel.Get(member.name, member.mobile_Tel);
                 member2.email = member2.member_seq + "@Kyowon.co.kr";
 
                 member2.UpdateEmail();

@@ -53,7 +53,7 @@ namespace Kyowon_Toy.Controllers
 
 
 
-
+        [Authorize]
         public IActionResult BoardList(int page, string key, string keyword, int type)
         {
 
@@ -173,6 +173,7 @@ namespace Kyowon_Toy.Controllers
             ViewBag.StartPage = startPage;
             ViewBag.EndPage = endPage;
             ViewBag.member = member;
+            ViewBag.boardType = type;
 
             //return View(BoardModel.GetList(search));
             return View(answer);

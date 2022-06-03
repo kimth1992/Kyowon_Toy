@@ -150,7 +150,7 @@ namespace Kyowon_Toy.Controllers
             return Redirect("/mailbox/mailboxlist");
         }
 
-        public IActionResult resend(int reciever_seq, int sender_seq, string title, string content, List<IFormFile> postedFiles)
+        public IActionResult resend(int reciever_seq, int sender_seq, string title, string content, List<IFormFile> postedFiles, string reciever_file)
         {
 
             string wwwPath = this.Environment.WebRootPath;
@@ -178,8 +178,10 @@ namespace Kyowon_Toy.Controllers
             }
 
 
-
-
+            MailBoxFileModel filemodel2 = new MailBoxFileModel();
+            filemodel2.fileName = reciever_file;
+            filemodel2.fileUrl = path;
+            uploadedFiles.Add(filemodel2);
 
 
 

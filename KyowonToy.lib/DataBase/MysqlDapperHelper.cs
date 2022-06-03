@@ -61,6 +61,8 @@ namespace KyowonToy.lib.DataBase
 
         }
 
+
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

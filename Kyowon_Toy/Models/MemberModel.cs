@@ -145,6 +145,24 @@ Update member set email = @email where member_seq = @member_seq";
         }
 
 
+        public static List<MemberModel> mobileCheck(string mobile_tel)
+        {
+
+            string sql = @"
+select member_seq, mobile_tel from member where mobile_tel = @mobile_tel";
+            using (var db = new MysqlDapperHelper())
+            {
+                List<MemberModel> me = db.Query<MemberModel>(sql, new { mobile_tel = mobile_tel });
+
+                int num = me.Count();
+
+                return me;
+
+            }
+        }
+
+
+
         public int Update()
         {
 
@@ -187,14 +205,14 @@ where member_seq = @member_seq";
 
 
 
-        public static MemberModel Get(string name)
+        public static MemberModel Get(string name, string mobile_tel)
         {
             using (var db = new MysqlDapperHelper())
             {
                 string sql = @"
 select member_seq, name, password, department, position, photo, email, office_tel, birthday,
-mobile_tel, registeredDate, address, active from member where name = @name";
-                return db.QuerySingle<MemberModel>(sql, new { name = name });
+mobile_tel, registeredDate, address, active from member where name = @name and mobile_tel = @mobile_tel";
+                return db.QuerySingle<MemberModel>(sql, new { name = name , mobile_tel = mobile_tel });
             }
         }
         public static MemberModel findByNo(int member_seq)

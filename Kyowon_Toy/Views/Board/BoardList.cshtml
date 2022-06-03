@@ -6,6 +6,7 @@
     int totalPageCount = ViewBag.TotalPageCount ?? 1;
     int startPage = ViewBag.StartPage;
     int endPage = ViewBag.EndPage;
+    int boardType = ViewBag.boardType;
 
 
     if (page > totalPageCount)
@@ -142,34 +143,34 @@
                                         <a href="?page=1">&lt;&lt;</a>
                                     </button>
                                     <button type="button" class="btn btn-link">
-                                        <a href="?page=@(startPage-1)">&lt;</a>
+                                        <a href="?page=@(startPage-1)&type=@boardType">&lt;</a>
                                     </button>
                                 }
                                 @if (page != 1 && Model.Count != 0)
                                 {
                                     <button type="button" class="btn btn-link">
-                                        <a href="?page=@(page-1)">이전&nbsp;</a>
+                                        <a href="?page=@(page-1)&type=@boardType">이전&nbsp;</a>
                                     </button>
                                 }
 
                                 @for (int i = startPage; i <= endPage; i++)
                                 {
-                                    <a href="?page=@i" class="btn btn-@(page == i? "primary" : "default")">@i</a>
+                                    <a href="?page=@i&type=@boardType" class="btn btn-@(page == i? "primary" : "default")">@i</a>
 
                                 }
                                 @if (page != totalPageCount)
                                 {
                                     <button type="button" class="btn btn-link">
-                                        <a href="?page=@(page+1)">다음</a>
+                                        <a href="?page=@(page+1)&type=@boardType">다음</a>
                                     </button>
                                 }
                                 @if (page < totalPageCount)
                                 {
                                     <button type="button" class="btn btn-link">
-                                        <a href="?page=@(endPage+1)">&gt;</a>
+                                        <a href="?page=@(endPage+1)&type=@boardType">&gt;</a>
                                     </button>
                                     <button type="button" class="btn btn-link">
-                                        <a href="?page=@totalPageCount">&gt;&gt;</a>
+                                        <a href="?page=@totalPageCount&type=@boardType">&gt;&gt;</a>
                                     </button>
                                 }
                             </div>

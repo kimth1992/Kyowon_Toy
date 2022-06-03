@@ -36,6 +36,7 @@
                 <div class="col-sm-4">
                     <input type = "hidden" name = "reciever_seq" value = "@mail.sender_idx" />
                     <input id='f-receiver' type='text' name='receiver.nickname' class="form-control"value="@mail.sender.name (@mail.sender_idx)" readOnly>
+              
                     <!-- <input type="button" name='findId' value="아이디확인"> -->
                     
                 </div>
@@ -126,6 +127,7 @@
                                     {
                             //  <span><a href = ""><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
                                <span><a href = "~/MailBox/DownloadFile?idx=@member.member_seq&fileName=@files[i].fileName"><img src="/upload/save.jpeg" />  @files[i].fileName &nbsp;&nbsp; </a> </span>
+                         <input type = "hidden" name = "reciever_file" value="@files[i].fileName" />    
                                     }
 
                         <div class="col-sm-4">

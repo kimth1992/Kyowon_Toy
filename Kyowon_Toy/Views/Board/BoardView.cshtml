@@ -11,6 +11,7 @@
     var likeOrNot = ViewBag.likeOrNot;
     MemberModel writer = ViewBag.writer;
     List<FileModel> files = ViewBag.files;
+    MemberModel member = ViewBag.member;
 
 }
 
@@ -124,6 +125,14 @@
                             <input type="hidden" name="type" value="">
                         </form>
                     }
+                    
+                    <!--
+                    @if(!Model.user.Equals(1) && !Model.user.Equals(@member.member_seq))
+                    {
+                    <input class="btn btn-sm btn-danger" type="button" value="신고" onclick= "boardReport()">
+                        
+                    }
+                    -->
                 </div>
 
 
@@ -136,7 +145,7 @@
                         <input type="hidden" name="idx" value="@Model.idx">
                         <button id="heartBtn" style="border: 0; background-color: white; outline:0;" type="submit" value=@likeOrNot>
                             <i class="bi bi-heart" id="heartIcon" style="color: red" data-like=@likeOrNot></i>
-                            &nbsp;좋아요&nbsp;@likeList.Count &nbsp;&nbsp;
+                            &nbsp;추천&nbsp;@likeList.Count &nbsp;&nbsp;
                         </button><i class="bi bi-chat-square-dots"></i>&nbsp;댓글&nbsp;@comments.Count
                     </form>
                     <hr size="5px" color="black"> <!-- hr 템플릿 설정되어있음 black > opacity -->
@@ -206,70 +215,7 @@
 
                 
       
-                <!--
-
-                      <div class="col-lg-12">
-                 <form action= "../comment/add">
-                  <input type ="hidden" name ="board_no"  value ="${board.no}">
-                  <div class="card">
-                      <div class="row">
-                              <div class="form-group col-sm-10">
-                                <input class="form-control input-sm" id="newReplyText" style = "float:left;" name = "content" type="text" placeholder="한줄 답변">
-                              </div>
-                            <div class="form-group col-sm-2" style = "width:230px; ">
-                              <input id = "f-content" style = "margin-top:3px; float:right;" type = "submit" class="btn btn-primary btn-sm"  value = "등록" onclick = "return checkValue()">
-                            </div>
-                      </div>
-
-                      여기까지가 댓글 다는 기능
-                    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-
-                     <div class="card-footer">
-                     <ul id="replies">
-
-                         <c:forEach items ="${commentList}" var= "comment">
-
-
-                      <p style="float:left;"> 작성자 : ${comment.commenter.nickname}&nbsp;&nbsp;&nbsp;</p>
-
-                      <div class="dropdown" style="float:left;">
-                        <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false" style="dropdown-border-color: rgba($black, .15);">
-                          더보기
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                          <li><button name="btn-modal" class="dropdown-item" type="button"
-                          data-nickname="${comment.commenter.nickname}" onclick = "return checkValue()">쪽지 보내기</button></li>
-                        </ul>
-                      </div>
-                      <br>
-                   <p></p>
-                   <p style="xwidth: 230.7px;"> 내용 : ${comment.content} </p>
-                   <p> 댓글 작성 날짜 : ${comment.registeredDate}</p>
-
-                   <div id = "UDbutton" style ="margin-left : 0px">
-                   <c:if test = "${loginUser.nickname == comment.commenter.nickname }">
-
-                  <button class="btn btn-xs btn-success" name="updateButton" onclick="updateComment('${comment.no}')" type="button">댓글 수정</button>
-                  <a href= '../comment/delete?no=${comment.no}&board_no=${board.no}' class="btn btn-primary right" >댓글 삭제</a>
-
-                   </c:if>
-                  </div>
-                <hr>
-                     </c:forEach>
-
-                     </ul>
-                     </div>
-
-
-
-
-                    </div>
-
-                    </form>
-                     </div>
-
-                          -->
+               
                 <!--  다음글, 이전글 Div  -->
 
                 <div>
@@ -326,7 +272,7 @@
      window.open("boardcheck?idx=@Model.idx", "check", "width=600 height = 450");
  }
 
-  <!-- 좋아요 하트 변경 -->
+
 document.querySelectorAll("#heartBtn").forEach((tag) => {
 if (tag.getAttribute("value") == 1) {
   $("#heartIcon").attr('class', 'bi bi-heart-fill');
@@ -337,15 +283,21 @@ if (tag.getAttribute("value") == 1) {
 
 
 
+
     $("#btnU").click(function() {
         $("#form1 input[name=type]").val("U");
         $("#form1").submit();
     });
-
       $("#btnD").click(function() {
         $("#form1 input[name=type]").val("D");
         $("#form1").submit();
     });
+
+
+
+      function boardReport(){
+       window.open("/board/report?no=${board.no}&title=${board.title}&writer=${board.writer.nickname}", "report", "width=600 height = 450");
+     }
 
 
 

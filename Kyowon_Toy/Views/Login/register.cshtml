@@ -60,13 +60,13 @@
                   return false;
               }  */
 
-              if(!document.userInfo.password.value){
+              if(!document.userInfo.pw.value){
                   alert("비밀번호를 입력하세요.");
                   return false;
               }
 
               // 비밀번호와 비밀번호 확인에 입력된 값이 동일한지 확인
-              if(document.userInfo.password.value != document.userInfo.passwordcheck.value ){
+              if(document.userInfo.pw.value != document.userInfo.pw2.value ){
                   alert("비밀번호를 동일하게 입력하세요.");
                   return false;
               }
@@ -91,10 +91,16 @@
                   return false;
               }
 
-              if(!document.userInfo.tel.value){
+              if(document.userInfo.birthdd.value > 31) {
+                   alert("31일보다 큰 날짜는 지정할 수 없습니다.");
+                  return false;
+              }
+              
+              if(!document.userInfo.mobile_tel.value){
                   alert("연락처를 입력하세요.");
                   return false;
               }
+              
               /*
               if(!document.userInfo.sex.value){
                   alert("성별을 선택하세요.");
@@ -138,7 +144,7 @@
 
         <h1 style="text-align : center">회원가입</h1>
 
-        <form name="userInfo" action="/login/register" method="post" enctype="multipart/form-data">
+        <form name="userInfo" action="/login/register" method="post" enctype="multipart/form-data" onsubmit="return checkValue()">
 
             <div class="col-md-12" style="text-align : center">
                 <h3 for="validationServer04" class="form-label">-교원에 입사하신 것을 환영합니다-</h3>
@@ -202,15 +208,18 @@
             <div class="mb-3 row">
                 <label for='f-password' class="col-sm-3 col-form-label">* 비밀번호</label>
                 <div class="col-sm-6">
-                    <input id='f-password' type='password' name='password' class="form-control">
+                    <input id='pw' type='password' name='password' class="form-control">
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for='f-passwordcheck' class="col-sm-3 col-form-label">* 비밀번호확인</label>
                 <div class="col-sm-6">
-                    <input id='f-passwordcheck' type='password' name='passwordcheck' class="form-control">
+                    <input id='pw2' type='password' name='passwordcheck' class="form-control">
                 </div>
             </div>
+                <div class="alert alert-success" id="alert-success" style="width:400px;">비밀번호가 일치합니다.</div>
+                <div class="alert alert-danger" id="alert-danger" style="width:400px;">비밀번호가 일치하지 않습니다.</div>
+
             <!-- 이메일 부분
             <div class="mb-3 row">
                 <label for='f-email' class="col-sm-3 col-form-label">* 이메일</label>
@@ -270,12 +279,10 @@
 
 
             <div class="mb-3 row">
-                <label for='f-tel' class="col-sm-3 col-form-label">연락처</label>
+                <label for='f-tel' class="col-sm-3 col-form-label">*연락처</label>
                 <div class="col-sm-6">
-                    <input id='f-tel' type='tel' name='mobile_tel' placeholder="010-0000-0000" class="form-control">
-                    <div class="invalid-feedback">
-                        이미 존재하는 연락처입니다.
-                    </div>
+                    <input id='mobile_tel' type='tel' name='mobile_tel' placeholder="010-0000-0000" class="form-control">
+                 <div id="checkMsg"></div>
                 </div>
                 <div class="col-auto">
                     <button id="x-tel-check-btn" type="button" class="btn btn-primary form-control">중복검사</button>
@@ -373,6 +380,9 @@
         };
  
 
+
+
+
         /*
         document.querySelector ("#x-id-check-btn").onclick = () =>{
                var xhr = new XMLHttpRequest();
@@ -390,6 +400,54 @@
             };
 
             */
+
+$(function(){
+
+        $("#alert-success").hide();
+        $("#alert-danger").hide();
+        $("input").keyup(function(){
+            var pwd1=$("#pw").val();
+            var pwd2=$("#pw2").val();
+            if(pwd1 != "" || pwd2 != ""){
+                if(pwd1 == pwd2){
+                    $("#alert-success").show();
+                    $("#alert-danger").hide();
+                    $("#submit").removeAttr("disabled");
+                }else{
+                    $("#alert-success").hide();
+                    $("#alert-danger").show();
+                    $("#submit").attr("disabled", "disabled");  
+                }    
+            }
+        });
+    });
+
+
+
+
+
+
+                $(document).ready(function(){
+        $('#x-tel-check-btn').on('click', function(){
+            $.ajax({
+                type: 'POST',
+                url: '/login/mobiletel_check',
+                data: {
+                    "mobile_tel" : $('#mobile_tel').val()
+                },
+                success: function(data){
+                    if($.trim(data) == 0){
+                        $('#checkMsg').html('<p style="color:blue">사용 가능한 연락처 입니다.</p>');
+                    }
+                    else{
+                        $('#checkMsg').html('<p style="color:red">이미 등록된 연락처 입니다.</p>');
+                    }
+                }
+            });    //end ajax    
+        });    //end on    
+    });
+
+
 
 
     </script>
